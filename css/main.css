@@ -1,0 +1,134 @@
+@font-face {
+	font-family: TitilliumWeb;
+	font-weight: 400;
+	src: url("../fonts/Titillium_Web/TitilliumWeb-Regular.ttf") format("truetype");
+}
+@font-face {
+	font-family: TitilliumWeb;
+	font-weight: 600;
+	src: url("../fonts/Titillium_Web/TitilliumWeb-Bold.ttf") format("truetype");
+}
+@font-face {
+	font-family: TitilliumWeb;
+	font-weight: 100;
+	src: url("../fonts/Titillium_Web/TitilliumWeb-Light.ttf") format("truetype");
+}
+
+body.frametrail-body {
+	background: #fff;
+	font-family: TitilliumWeb,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	width: 100%;
+	overflow: auto;
+}
+
+h1, h2, h3, h4, h5 {
+	font-weight: normal;
+}
+
+hr {
+	background-color: #cfcfcf;
+	height: 1px;
+	border: 0;
+	clear: both;
+}
+
+button {
+	border: 1px solid transparent;
+}
+
+button:hover, button:active, button:focus {
+	border: 1px solid #ccc;
+}
+
+[class^="icon-"]::before, [class*=" icon-"]::before, .ui-icon::before {
+	font-family: 'Glyphicons Halflings';
+}
+
+.message {
+	height: auto;
+	line-height: 20px;
+	background-color: #FCFAF1;
+	border: 1px solid #FFC414;
+	color: #333;
+	padding: 1px 4px;
+	margin-bottom: 10px;
+	clear: both;
+	border-radius: 3px;
+	display: none;
+}
+
+.message.active {
+	display: block;
+}
+
+.message.success {
+	background-color: #f1ffe3;
+	border: 1px solid #739600;
+	color: #739600;
+}
+
+.main {
+	width: 80%;
+	margin: 0 auto;
+	padding: 30px 0 80px 0;
+}
+
+#fileDropContainer {
+	height: auto;
+	line-height: 20px;
+	background-color: #EBF2FB;
+	border: 1px dashed #9BA2BE;
+	color: #333;
+	padding: 31px;
+	margin-bottom: 10px;
+	clear: both;
+	border-radius: 3px;
+	text-align: center;
+}
+
+#fileDropContainer.dragOver {
+	border: 2px solid #9BA2BE;
+}
+
+.fileContainer {
+	
+}
+
+/*
+.fileContainer ul {
+	list-style: none;
+	padding: 0px;
+	margin: none;
+}
+
+.fileContainer ul li {
+	float: left;
+	padding: 10px;
+	margin: 0 4px 4px 0;
+	border: 1px solid transparent;
+	background: #f8f8f8;
+}
+
+.fileContainer ul li:hover {
+	border-color: #afafaf;
+	cursor: pointer;
+}
+
+.fileContainer ul li.active {
+	border-color: #999999;
+	box-shadow: inset 0 0 6px #afafaf;
+	background: #efefef;
+}
+*/
+
+.resultContainer {
+	clear: both;
+	padding-top: 6px;
+}
+
+.resultContainer textarea {
+	width: 100%;
+	height: 300px;
+}
