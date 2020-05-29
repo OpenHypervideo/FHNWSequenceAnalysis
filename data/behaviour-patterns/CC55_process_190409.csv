@@ -1,8 +1,0 @@
-﻿"<div class=""th-inner sortable both"">User ID</div><div class=""fht-cell""></div>","<div class=""th-inner sortable both"">Video ID</div><div class=""fht-cell""></div>","<div class=""th-inner sortable both"">Aktion</div><div class=""fht-cell""></div>","<div class=""th-inner sortable both"">Session-Zeit</div><div class=""fht-cell""></div>","<div class=""th-inner sortable both"">Video-Zeit</div><div class=""fht-cell""></div>","<div class=""th-inner sortable both"">Video pausiert</div><div class=""fht-cell""></div>","<div class=""th-inner sortable both"">Infos</div><div class=""fht-cell""></div>"
-152,2,UserLogin,00:00:00,00:00,Ja,"userID: 152<br style=""mso-data-placement: same-cell;"">userName: CC55<br style=""mso-data-placement: same-cell;"">userRole: user<br style=""mso-data-placement: same-cell;"">userMail: cc55@fhnw.ch<br style=""mso-data-placement: same-cell;"">"
-152,2,VideoPlay,00:00:07,00:00,Ja,
-152,2,EditSave,00:21:03,03:56,Ja,
-152,2,EditSave,00:21:04,03:56,Ja,
-152,2,EditSave,00:21:06,03:56,Ja,
-152,2,EditEnd,00:21:08,03:56,Ja,
-152,2,UserLogout,00:21:08,03:56,Ja,
