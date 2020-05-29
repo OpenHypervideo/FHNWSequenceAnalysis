@@ -1,8 +1,10 @@
 var sequenceData = [];
+var sequenceRules = [];
 
 $(document).ready( function() {
 
 	sequenceData = [];
+	sequenceRules = [];
 	$('.resultContainer textarea').val('');
 	$('#visualResultContainer').empty();
 
@@ -37,5 +39,7 @@ $(document).ready( function() {
 	}, false);
 
 	$('#detectSequencesBtn').click(analyseSequences);
+
+	getRules();
 
 });
