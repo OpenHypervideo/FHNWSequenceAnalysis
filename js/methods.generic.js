@@ -22,7 +22,7 @@ function handleFileDrop(evt) {
 
 				sequenceData.push(dataJSON);
 
-				updateFileList(sequenceData);
+				//updateFileList(sequenceData);
 				updateVisualResult(sequenceData);
 				updateDataTextarea(sequenceData);
 			};
