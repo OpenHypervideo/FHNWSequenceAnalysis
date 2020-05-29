@@ -16,9 +16,10 @@ function detectSequences(actionArray) {
 
 	/**** 
 	* DUMMY SEQUENCE DETECTION 
-	* (add dummy sequence for all action arrays which start with the action "VideoPlay")
+	* (add dummy sequence for all action arrays which start with the action "VideoPlay"
+	*  and contain at least 3 actions)
 	****/
-	if (actionArray[0]['Aktion'] == 'VideoPlay') {
+	if (actionArray[0]['Aktion'] == 'VideoPlay' && actionArray.length >= 3) {
 		
 		var randomRule = sequenceRules[getRandomInt(0,19)];
 
