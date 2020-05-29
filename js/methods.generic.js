@@ -99,12 +99,12 @@ function cleanActionData(originActionArray) {
 
 		if (actionsToMerge.indexOf(originActionArray[i]['Aktion']) != -1 && 
 			firstMergedAction === undefined) {
-			console.log('test 1', originActionArray[i]);
+			//console.log('test 1', originActionArray[i]);
 			firstMergedAction = originActionArray[i];
 		} else if (previousAction && originActionArray[i]['Aktion'] == previousAction['Aktion'] && 
 			actionsToMerge.indexOf(originActionArray[i]['Aktion']) != -1) {
 			// DO NOTHING
-			console.log('test 2', originActionArray[i]);
+			//console.log('test 2', originActionArray[i]);
 		} else if (previousAction && originActionArray[i]['Aktion'] != previousAction['Aktion'] && 
 			firstMergedAction) {
 
@@ -112,10 +112,10 @@ function cleanActionData(originActionArray) {
 			cleanActionArray.push(mergedAction);
 
 			firstMergedAction = undefined;
-			console.log('PUSH', mergedAction);
+			//console.log('PUSH', mergedAction);
 		} else if (actionsToIgnore.indexOf(originActionArray[i]['Aktion']) == -1) {
 			cleanActionArray.push(originActionArray[i]);
-			console.log('PUSH', originActionArray[i]);
+			//console.log('PUSH', originActionArray[i]);
 		}
 
 		previousAction = originActionArray[i];
