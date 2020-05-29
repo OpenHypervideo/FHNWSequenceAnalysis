@@ -171,4 +171,5 @@ button#detectSequencesBtn {
 	position: absolute;
 	top: 0px;
 	background: #FFBD79;
+	overflow: hidden;
 }
