@@ -23,6 +23,7 @@ function handleFileDrop(evt) {
 				sequenceData.push(dataJSON);
 
 				updateFileList(sequenceData);
+				updateVisualResult(sequenceData);
 				updateDataTextarea(sequenceData);
 			};
 		})(files[i]);
@@ -46,7 +47,41 @@ function updateDataTextarea(data) {
 }
 
 function updateVisualResult(data) {
-	
+	$('#visualResultContainer').empty();
+
+	for (var e = 0; e < data.length; e++) {
+		
+		var evalTitle = $('<div class="evalTitle">'+ data[e].fileName +'</div>');
+		var evalBody = $('<div class="evalBody"></div>');
+		var detectedSequences = $('<ul class="detectedSequences"></ul>');
+		var evalItem = $('<ul class="actionList"></ul>');
+		
+		for (var s = 0; s < data[e].sequences.length; s++) {
+			
+			var sequencesListItem = $('<li class="sequencesListItem" title="'+ data[e].sequences[s]['label'] +'">'+ data[e].sequences[s]['number'] +': '+ data[e].sequences[s]['label'] + '</li>');
+			var leftValue = 152 * data[e].sequences[s]['actionIndexFrom'];
+			var widthValue = 152 * (data[e].sequences[s]['actionIndexTo'] - data[e].sequences[s]['actionIndexFrom']);
+			
+			sequencesListItem.css({
+				left: leftValue + 'px',
+				width: widthValue + 'px'
+			});
+
+			detectedSequences.append(sequencesListItem);
+
+		}
+
+		for (var i = 0; i < data[e].actions.length; i++) {
+			
+			var actionListItem = $('<li class="actionListItem">'+ data[e].actions[i]['Aktion'] + '</li>');
+			evalItem.append(actionListItem);
+
+		}
+
+		evalBody.append(detectedSequences, evalItem);
+		$('#visualResultContainer').append(evalTitle, evalBody);
+
+	}
 }
 
 function getSheetData(sheetID, callback) {
@@ -157,4 +192,10 @@ function formatTime(aNumber) {
 
 	return hourValue + minutes + ':' + seconds;
 
+}
+
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
