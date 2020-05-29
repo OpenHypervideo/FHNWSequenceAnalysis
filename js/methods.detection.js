@@ -16,15 +16,17 @@ function detectSequences(actionArray) {
 
 	/**** 
 	* DUMMY SEQUENCE DETECTION 
-	* (add dummy sequence for all action arrays which start with the action "UserLogin")
+	* (add dummy sequence for all action arrays which start with the action "VideoPlay")
 	****/
-	if (actionArray[0]['Aktion'] == 'UserLogin') {
+	if (actionArray[0]['Aktion'] == 'VideoPlay') {
 		
+		var randomRule = sequenceRules[getRandomInt(0,19)];
+
 		sequenceResults.push({
-			label: 'Find position and add new annotation',
-			number: 3.1,
-			actionIndexFrom: 2,
-			actionIndexTo: 5
+			label: randomRule.sequenceLabel,
+			number: randomRule.sequenceNumber,
+			actionIndexFrom: getRandomInt(0,2),
+			actionIndexTo: getRandomInt(4,6)
 		});
 
 	}
