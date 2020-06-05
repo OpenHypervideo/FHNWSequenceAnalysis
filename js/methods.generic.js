@@ -59,12 +59,12 @@ function updateVisualResult(data) {
 		for (var s = 0; s < data[e].sequences.length; s++) {
 			
 			var sequencesListItem = $('<li class="sequencesListItem" title="'+ data[e].sequences[s]['label'] +'">'+ data[e].sequences[s]['number'] +': '+ data[e].sequences[s]['label'] + '</li>');
-			var leftValue = 152 * data[e].sequences[s]['actionIndexFrom'];
-			var widthValue = 152 * (data[e].sequences[s]['actionIndexTo'] - data[e].sequences[s]['actionIndexFrom']);
+			var leftValue = 153 * data[e].sequences[s]['actionIndexFrom'];
+			var widthValue = 153 * (data[e].sequences[s]['actionIndexTo'] - data[e].sequences[s]['actionIndexFrom'] + 1);
 			
 			sequencesListItem.css({
 				left: leftValue + 'px',
-				width: widthValue + 'px'
+				width: widthValue - 3 + 'px'
 			});
 
 			detectedSequences.append(sequencesListItem);

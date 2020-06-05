@@ -156,7 +156,7 @@ button#detectSequencesBtn {
 }
 
 .resultContainer #visualResultContainer ul.detectedSequences {
-	margin-left: 2px;
+	margin-left: 0px;
 }
 
 .resultContainer #visualResultContainer li {
