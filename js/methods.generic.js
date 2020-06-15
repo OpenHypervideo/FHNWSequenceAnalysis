@@ -123,6 +123,7 @@ function cleanActionData(originActionArray) {
 			'UserLogout'
 		],
 		actionsToMerge = [
+			'AnnotationAdd',
 			'AnnotationChangeText', 
 			'AnnotationChangeTime'
 		];
