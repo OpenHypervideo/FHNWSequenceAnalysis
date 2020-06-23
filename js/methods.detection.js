@@ -31,11 +31,9 @@ function detectSequences(actionArray) {
   var patterns = SequenceDetector.generatePatternMatchers();
 
   for (pattern of patterns) {
-    console.log(pattern);
     var matchFn = pattern.fn;
     var matches = matchFn(encodedActionArray);
     for (match of matches) {
-      console.log(match);
       sequenceResults.push({
         label: pattern.label,
         number: pattern.number,
@@ -44,7 +42,6 @@ function detectSequences(actionArray) {
       });
     }
   }
-  console.log("sequenceREsults", sequenceResults);
   return sequenceResults;
 }
 
