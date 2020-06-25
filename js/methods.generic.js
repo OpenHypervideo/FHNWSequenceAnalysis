@@ -3,6 +3,7 @@ function handleFileDrop(evt) {
 	evt.preventDefault();
 	
 	var files = evt.originalEvent.dataTransfer.files;
+	//console.log(files);
 
 	for (var i = 0; i < files.length; i++) {
 		var reader = new FileReader();
@@ -81,6 +82,8 @@ function updateVisualResult(data) {
 		evalBody.append(detectedSequences, evalItem);
 		$('#visualResultContainer').append(evalTitle, evalBody);
 
+		detectedSequences.CollisionDetection({spacing:0, includeVerticalMargins:true})
+
 	}
 }
 
@@ -114,8 +117,7 @@ function getSheetData(sheetID, callback) {
 
 function cleanActionData(originActionArray) {
 	
-	var cleanActionArray = [],
-		actionsToIgnore = [
+	var actionsToIgnore = [
 			'UserLogin', 
 			'EditStart', 
 			'EditSave', 
@@ -127,38 +129,19 @@ function cleanActionData(originActionArray) {
 			'AnnotationChangeText', 
 			'AnnotationChangeTime'
 		];
-	
-	var firstMergedAction = undefined;
-	var previousAction = undefined;
 
-	for (var i = 0; i < originActionArray.length; i++) {
+	var cleanActionArray = originActionArray.reduce((r, o) => {
+		var last = r[r.length - 1];
 
-		if (actionsToMerge.indexOf(originActionArray[i]['Aktion']) != -1 && 
-			firstMergedAction === undefined) {
-			//console.log('test 1', originActionArray[i]);
-			firstMergedAction = originActionArray[i];
-		} else if (previousAction && originActionArray[i]['Aktion'] == previousAction['Aktion'] && 
-			actionsToMerge.indexOf(originActionArray[i]['Aktion']) != -1) {
-			// DO NOTHING
-			//console.log('test 2', originActionArray[i]);
-		} else if (previousAction && originActionArray[i]['Aktion'] != previousAction['Aktion'] && 
-			firstMergedAction) {
-
-			var mergedAction = firstMergedAction;
-			cleanActionArray.push(mergedAction);
-
-			firstMergedAction = undefined;
-			//console.log('PUSH', mergedAction);
-		} else if (actionsToIgnore.indexOf(originActionArray[i]['Aktion']) == -1) {
-			cleanActionArray.push(originActionArray[i]);
-			//console.log('PUSH', originActionArray[i]);
+		if (last && last['Aktion'] === o['Aktion']) {
+			// COMBINE DATA
+			//last.duration += o.duration;
+		} else if (actionsToIgnore.indexOf(o['Aktion']) == -1) {
+			r.push({ ...o });
 		}
 
-		previousAction = originActionArray[i];
-
-	}
-
-
+		return r;
+	}, []);
 
 	return cleanActionArray;
 }
