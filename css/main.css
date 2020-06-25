@@ -169,7 +169,8 @@ button#detectSequencesBtn {
 
 .resultContainer #visualResultContainer li.sequencesListItem {
 	position: absolute;
-	top: 0px;
+	bottom: 0px;
+	height: 24px;
 	background: #FFBD79;
 	overflow: hidden;
 }
