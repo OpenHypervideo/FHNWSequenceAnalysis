@@ -1,10 +1,10 @@
 function analyseSequences() {
-  console.log("sequenceData BEFORE", sequenceData);
+  //console.log("sequenceData BEFORE", sequenceData);
   for (var i = 0; i < sequenceData.length; i++) {
     var detectedSequences = detectSequences(sequenceData[i].actions);
     sequenceData[i].sequences = detectedSequences;
   }
-  console.log("sequenceData AFTER", sequenceData);
+  //console.log("sequenceData AFTER", sequenceData);
   updateVisualResult(sequenceData);
   updateDataTextarea(sequenceData);
 }
@@ -33,6 +33,7 @@ function detectSequences(actionArray) {
   for (pattern of patterns) {
     var matchFn = pattern.fn;
     var matches = matchFn(encodedActionArray);
+    //console.log(pattern);
     for (match of matches) {
       sequenceResults.push({
         label: pattern.label,
