@@ -33,6 +33,48 @@ function handleFileDrop(evt) {
 	}
 }
 
+function loadSampleData() {
+	var xhrList = [];
+	var sampleFiles = [
+		'IA39_process_181030.xlsx',
+		'IH24_process_181016.xlsx',
+		'IC65_process_181129.xlsx',
+		'CA42_process_181108.xlsx',
+		'CH35_process_181018.xlsx',
+		'CC21_process_181004.xlsx'
+	];
+
+	for (var i = 0; i < sampleFiles.length; i++) {
+		var url = '../data/use-case/'+ sampleFiles[i];
+		xhrList[i] = new XMLHttpRequest();
+		xhrList[i].open("GET", url, true);
+		xhrList[i].responseType = "arraybuffer";
+
+		xhrList[i].onload = function(evt) {
+		  /* parse the data when it is received */
+			//console.log(req);
+			var data = new Uint8Array(this.response);
+			var workbook = XLSX.read(data, {
+				type: 'array'
+			});
+
+			var dataJSON = {
+				fileName: this.responseURL.split('/').pop(),
+				sequences: [],
+				actions: cleanActionData(XLSX.utils.sheet_to_json(workbook.Sheets.Table))
+			};
+
+			sequenceData.push(dataJSON);
+
+			//updateFileList(sequenceData);
+			updateVisualResult(sequenceData);
+			updateDataTextarea(sequenceData);
+		};
+		xhrList[i].send();
+	}
+	
+}
+
 function updateFileList(data) {
 	
 	$('#fileList').empty();
@@ -123,7 +165,8 @@ function cleanActionData(originActionArray) {
 			'EditStart', 
 			'EditSave', 
 			'EditEnd', 
-			'UserLogout'
+			'UserLogout',
+			'AnnotationDelete'
 		],
 		actionsToMerge = [
 			'AnnotationAdd',
@@ -134,7 +177,7 @@ function cleanActionData(originActionArray) {
 	var cleanActionArray = originActionArray.reduce((r, o) => {
 		var last = r[r.length - 1];
 
-		if (last && last['Aktion'] === o['Aktion']) {
+		if (last && last['Aktion'] === o['Aktion'] && actionsToMerge.indexOf(o['Aktion']) != -1) {
 			// COMBINE DATA
 			//last.duration += o.duration;
 		} else if (actionsToIgnore.indexOf(o['Aktion']) == -1) {
