@@ -59,13 +59,14 @@ function updateVisualResult(data) {
 		
 		for (var s = 0; s < data[e].sequences.length; s++) {
 			
-			var sequencesListItem = $('<li class="sequencesListItem" title="'+ data[e].sequences[s]['label'] +'">'+ data[e].sequences[s]['number'] +': '+ data[e].sequences[s]['label'] + '</li>');
+			var sequencesListItem = $('<li class="sequencesListItem" title="'+ data[e].sequences[s]['sequenceLabel'] +'">'+ data[e].sequences[s]['sequenceNumber'] +': '+ data[e].sequences[s]['sequenceLabel'] + '</li>');
 			var leftValue = 153 * data[e].sequences[s]['actionIndexFrom'];
 			var widthValue = 153 * (data[e].sequences[s]['actionIndexTo'] - data[e].sequences[s]['actionIndexFrom'] + 1);
 			
 			sequencesListItem.css({
 				left: leftValue + 'px',
-				width: widthValue - 3 + 'px'
+				width: widthValue - 3 + 'px',
+				backgroundColor: data[e].sequences[s]['sequenceColor']
 			});
 
 			detectedSequences.append(sequencesListItem);

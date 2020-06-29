@@ -36,8 +36,9 @@ function detectSequences(actionArray) {
     //console.log(pattern);
     for (match of matches) {
       sequenceResults.push({
-        label: pattern.label,
-        number: pattern.number,
+        sequenceLabel: pattern.sequenceLabel,
+        sequenceNumber: pattern.sequenceNumber,
+        sequenceColor: pattern.sequenceColor,
         actionIndexFrom: match.startPos,
         actionIndexTo: match.endPos,
       });
