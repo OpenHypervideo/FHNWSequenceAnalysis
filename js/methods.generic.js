@@ -117,7 +117,7 @@ function updateVisualResult(data) {
 
 		for (var i = 0; i < data[e].actions.length; i++) {
 			
-			var actionListItem = $('<li class="actionListItem">'+ data[e].actions[i]['Aktion'] + '</li>');
+			var actionListItem = $('<li class="actionListItem">'+ (i+1) +' '+ data[e].actions[i]['Aktion'] + '</li>');
 			evalItem.append(actionListItem);
 
 		}
