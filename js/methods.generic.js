@@ -101,7 +101,7 @@ function updateVisualResult(data) {
 		
 		for (var s = 0; s < data[e].sequences.length; s++) {
 			
-			var sequencesListItem = $('<li class="sequencesListItem" title="'+ data[e].sequences[s]['sequenceLabel'] +'">('+ (s+1) +')'+ data[e].sequences[s]['sequenceNumber'] +': '+ data[e].sequences[s]['sequenceLabel'] + '</li>');
+			var sequencesListItem = $('<li class="sequencesListItem" title="'+ data[e].sequences[s]['sequenceLabel'] +'">'+ data[e].sequences[s]['sequenceNumber'] +': '+ data[e].sequences[s]['sequenceLabel'] + '</li>');
 			var leftValue = 153 * data[e].sequences[s]['actionIndexFrom'];
 			var widthValue = 153 * (data[e].sequences[s]['actionIndexTo'] - data[e].sequences[s]['actionIndexFrom'] + 1);
 			
