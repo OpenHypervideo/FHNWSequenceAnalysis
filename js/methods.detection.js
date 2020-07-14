@@ -2,8 +2,10 @@ function analyseSequences() {
   //console.log("sequenceData BEFORE", sequenceData);
   for (var i = 0; i < sequenceData.length; i++) {
     var detectedSequences = detectSequences(sequenceData[i].actions);
+    sequenceData[i].sequences = detectedSequences;
+
     var prioritizedSequences = getPrioritizedSequences(detectedSequences);
-    sequenceData[i].sequences = prioritizedSequences;
+    console.log(prioritizedSequences);
   }
   //console.log("sequenceData AFTER", sequenceData);
   updateVisualResult(sequenceData);
