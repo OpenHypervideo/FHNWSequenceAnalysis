@@ -40,6 +40,6 @@ $(document).ready( function() {
 
 	$('#detectSequencesBtn').click(analyseSequences);
 
-	getRules();
+	//getRules();
 
 });
