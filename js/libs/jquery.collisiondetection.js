@@ -32,24 +32,12 @@
             var a_left = $(a).position().left, 
                 b_left = $(b).position().left, 
                 a_width = $(a).width(),
-                b_width = $(b).width(),
-                ret;
-            
+                b_width = $(b).width();            
             if (a_left == b_left) {
-                return (a_width < b_width) ? -1 : (a_width > b_width) ? 1 : 0;
+                return (a_width < b_width) ? 1 : (a_width > b_width) ? -1 : 0;
             } else {
                 return (a_left < b_left) ? -1 : 1;
             }
-            /*
-            if (a_left < b_left) {
-                ret = -1;
-            } else if (a_left > b_left) {
-                ret = 1;
-            } else {
-                ret = 0;
-            }
-            return ret;
-            */
         }).detach();
         //reattach elements
         t.container.append(x);
@@ -121,8 +109,8 @@
     };
     CollisionDetection.prototype.process = function (els) {
         var o = this.opts, t = this;
-        //sort elements based on their appearance (left css property)
-        t.sort(els);
+        //sort elements
+        //t.sort(els);
         //arrange elements into levels
         t.leveler(els);
         //set dimensions
