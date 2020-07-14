@@ -34,7 +34,7 @@
                 a_width = $(a).width(),
                 b_width = $(b).width();            
             if (a_left == b_left) {
-                return (a_width < b_width) ? 1 : (a_width > b_width) ? -1 : 0;
+                return (a_width < b_width) ? -1 : (a_width > b_width) ? 1 : 0;
             } else {
                 return (a_left < b_left) ? -1 : 1;
             }
@@ -110,7 +110,7 @@
     CollisionDetection.prototype.process = function (els) {
         var o = this.opts, t = this;
         //sort elements
-        //t.sort(els);
+        t.sort(els);
         //arrange elements into levels
         t.leveler(els);
         //set dimensions
