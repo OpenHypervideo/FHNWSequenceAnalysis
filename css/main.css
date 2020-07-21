@@ -14,6 +14,11 @@
 	src: url("../fonts/Titillium_Web/TitilliumWeb-Light.ttf") format("truetype");
 }
 
+body {
+	--primary-bg-color: #fff;
+	--primary-fg-color: #000;
+}
+
 body.frametrail-body {
 	background: #fff;
 	font-family: TitilliumWeb,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -71,6 +76,97 @@ button#detectSequencesBtn {
 	background-color: #f1ffe3;
 	border: 1px solid #739600;
 	color: #739600;
+}
+
+.workingIndicator {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,.8);
+    display: none;
+}
+
+.workingMessage {
+	position: absolute;
+	top: 30%;
+	left: 10%;
+	width: 80%;
+	text-align: center;
+	font-size: 30px;
+}
+
+.workingSpinner {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+    margin-left: -30px;
+    border-radius: 50%;
+    transform-origin: center;
+    background: var(--primary-fg-color);
+    background: -moz-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
+    background: -webkit-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
+    background: -o-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
+    background: -ms-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
+    background: linear-gradient(to right, var(--primary-fg-color) 10%, transparent 42%);
+    -webkit-animation: loading 1.4s infinite linear;
+    animation: loading 1s infinite linear;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    mask-image: radial-gradient(transparent 65%, #000 66%);
+    -webkit-mask-image: radial-gradient(transparent 65%, #000 66%);
+}
+
+.workingSpinner:before {
+    width: 50%;
+    height: 50%;
+    background: var(--primary-fg-color);
+    border-radius: 100% 0 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+}
+
+.workingSpinner:after {
+    background: var(--primary-bg-color);
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    content: '';
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@-webkit-keyframes loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 .main {
@@ -173,4 +269,9 @@ button#detectSequencesBtn {
 	height: 24px;
 	background: #FFBD79;
 	overflow: hidden;
+}
+
+.resultContainer #visualResultContainer li.sequencesListItem.prioritized {
+	border: 3px solid #000;
+	padding-top: 0px;
 }
