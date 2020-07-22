@@ -1,5 +1,5 @@
 // your custom "queryable" worker
-var myTask = new QueryableWorker('js/methods.detection.worker.js');
+var myTask = new QueryableWorker(workerWrapper);
 
 // your custom "listeners"
 myTask.addListener('returnResult', function (result) {

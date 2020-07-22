@@ -251,9 +251,9 @@ function hideWorking() {
   QueryableWorker instances properties:
     * defaultListener: the default listener executed only when the Worker calls the postMessage() function directly
  */
-function QueryableWorker(url, defaultListener, onError) {
+function QueryableWorker(workerWrapperFunction, defaultListener, onError) {
   var instance = this,
-  worker = new Worker(url),
+  worker = new Worker(URL.createObjectURL(new Blob(["("+workerWrapperFunction.toString()+")()"], {type: 'text/javascript'}))),
   listeners = {};
 
   this.defaultListener = defaultListener || function() {};
