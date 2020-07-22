@@ -47,10 +47,6 @@ button:hover, button:active, button:focus {
 	border: 1px solid #ccc;
 }
 
-button#detectSequencesBtn {
-	background: #FFBD79;
-}
-
 [class^="icon-"]::before, [class*=" icon-"]::before, .ui-icon::before {
 	font-family: 'Glyphicons Halflings';
 }
@@ -80,11 +76,11 @@ button#detectSequencesBtn {
 
 .workingIndicator {
     position: fixed;
-    top: 0px;
+    top: 100px;
     left: 0px;
     width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,.8);
+    height: calc(100% - 100px);
+    background: rgba(255,255,255,.9);
     display: none;
 }
 
@@ -94,7 +90,7 @@ button#detectSequencesBtn {
 	left: 10%;
 	width: 80%;
 	text-align: center;
-	font-size: 30px;
+	font-size: 20px;
 }
 
 .workingSpinner {
@@ -170,30 +166,40 @@ button#detectSequencesBtn {
 }
 
 .main {
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
-	padding: 30px 0 80px 0;
+	padding: 30px 30px 80px 30px;
 }
 
 #fileDropContainer {
 	height: auto;
-	line-height: 20px;
+	line-height: calc(100vh - 250px);
 	background-color: #EBF2FB;
 	border: 1px dashed #9BA2BE;
 	color: #333;
-	padding: 31px;
+	padding: 20px;
 	margin-bottom: 10px;
 	clear: both;
 	border-radius: 3px;
 	text-align: center;
+	transition-property: line-height;
+	transition-duration: 600ms;
+}
+
+body.result #fileDropContainer {
+	line-height: 20px;
 }
 
 #fileDropContainer.dragOver {
 	border: 2px solid #9BA2BE;
 }
 
+.sampleDataInfo {
+	display: none;
+}
+
 .fileContainer {
-	
+	padding-top: 20px;
 }
 
 /*
@@ -226,6 +232,7 @@ button#detectSequencesBtn {
 .resultContainer {
 	clear: both;
 	padding-top: 6px;
+	display: none;
 }
 
 .resultContainer textarea {

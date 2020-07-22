@@ -2,8 +2,12 @@ function handleFileDrop(evt) {
 	evt.stopPropagation();
 	evt.preventDefault();
 	
+	showWorking('Processing files ...');
+
 	var files = evt.originalEvent.dataTransfer.files;
 	//console.log(files);
+
+	var filesProcessed = 0;
 
 	for (var i = 0; i < files.length; i++) {
 		var reader = new FileReader();
@@ -22,15 +26,21 @@ function handleFileDrop(evt) {
 				};
 
 				sequenceData.push(dataJSON);
-
-				//updateFileList(sequenceData);
-				updateVisualResult(sequenceData);
-				updateDataTextarea(sequenceData);
+				filesProcessed++;
+				
+				if (filesProcessed == files.length) {
+					//updateFileList(sequenceData);
+					//updateVisualResult(sequenceData);
+					setTimeout(function() {
+						analyseSequences();
+					}, 1000);
+				}
 			};
 		})(files[i]);
 
 		reader.readAsArrayBuffer(files[i]);
 	}
+
 }
 
 function loadSampleData() {
@@ -43,6 +53,10 @@ function loadSampleData() {
 		'CH35_process_181018.xlsx',
 		'CC21_process_181004.xlsx'
 	];
+
+	showWorking('Processing files ...');
+
+	var filesProcessed = 0;
 
 	for (var i = 0; i < sampleFiles.length; i++) {
 		var url = '../data/use-case/'+ sampleFiles[i];
@@ -65,10 +79,15 @@ function loadSampleData() {
 			};
 
 			sequenceData.push(dataJSON);
+			filesProcessed++;
 
-			//updateFileList(sequenceData);
-			updateVisualResult(sequenceData);
-			updateDataTextarea(sequenceData);
+			if (filesProcessed == sampleFiles.length) {
+				//updateFileList(sequenceData);
+				//updateVisualResult(sequenceData);
+				setTimeout(function() {
+					analyseSequences();
+				}, 1000);
+			}
 		};
 		xhrList[i].send();
 	}
@@ -85,11 +104,8 @@ function updateFileList(data) {
 
 }
 
-function updateDataTextarea(data) {
-	$('.resultContainer textarea').val(JSON.stringify(data,undefined, 2));
-}
-
 function updateVisualResult(data) {
+	$('.resultContainer').show();
 	$('#visualResultContainer').empty();
 
 	for (var e = 0; e < data.length; e++) {
@@ -237,8 +253,12 @@ function showWorking(message) {
 }
 
 function hideWorking() {
-	$('.workingMessage').html('');
-	$('.workingIndicator').hide();
+	setTimeout(function() {
+		$('.workingIndicator').fadeOut(200, function() {
+			$('.workingMessage').html('');
+		});
+	}, 2000);
+	
 }
 
 /*

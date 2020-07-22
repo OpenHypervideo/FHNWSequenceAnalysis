@@ -3,6 +3,10 @@ var sequenceRules = [];
 
 $(document).ready( function() {
 
+	if (!!document.location.host) {
+        $('.sampleDataInfo').show();
+    }
+
 	sequenceData = [];
 	sequenceRules = [];
 	$('.resultContainer textarea').val('');
@@ -37,8 +41,6 @@ $(document).ready( function() {
 		e.preventDefault();
 		e.stopPropagation();
 	}, false);
-
-	$('#detectSequencesBtn').click(analyseSequences);
 
 	//getRules();
 

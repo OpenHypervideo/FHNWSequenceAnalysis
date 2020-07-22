@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="Expires" content="-1" />
-    <title>Sequence Analysis Prototype</title>
+    <title>Action Sequence Detector</title>
     <!--
 			[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,32 +21,26 @@
   </head>
   <body class="frametrail-body">
     <div class="main">
-      <h2>Sequence Analysis Prototype</h2>
-      <hr />
+      <h2 class="text-center">Action Sequence Detector</h2>
       <div class="fileContainer">
-        <h3>Evaluation Files</h3>
-        <!--<div class="message active">HOW TO ....</div>-->
         <div id="fileDropContainer">
-          1) Drop evaluation files containing actions here: (XLSX Format)<br>
-          OR <button class="btn btn-sm" onclick="loadSampleData();">Load Sample Data</button>
+          Drop evaluation files containing actions here: (XLSX Format)
+          <div class="sampleDataInfo">OR <button class="btn btn-sm" onclick="loadSampleData();">Load Sample Data</button></div>
         </div>
         <div class="fileListContainer">
           <ul id="fileList"></ul>
           <div style="clear: both;"></div>
         </div>
       </div>
-      <hr />
-      <div class="optionsContainer">
-        <button id="detectSequencesBtn" class="btn btn-sm">
-          2) Click to Detect Sequences
-        </button>
-      </div>
-      <hr />
       <div class="resultContainer">
-        <h3>Visual Log</h3>
-        <div id="visualResultContainer"></div>
-        <h3>JSON Data Log</h3>
-        <textarea></textarea>
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#visualResultContainer">Detected Sequences</a></li>
+          <li><a data-toggle="tab" href="#analysisResultContainer">Data Analysis</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="visualResultContainer" class="tab-pane fade in active"></div>
+          <div id="analysisResultContainer" class="tab-pane fade in"></div>
+        </div>
       </div>
       <div style="clear: both;"></div>
     </div>

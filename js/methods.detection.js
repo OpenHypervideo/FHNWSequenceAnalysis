@@ -7,12 +7,11 @@ myTask.addListener('returnResult', function (result) {
   //console.log(result);
   sequenceData = result;
 
-  updateVisualResult(sequenceData);
-  updateDataTextarea(sequenceData);
+  $('body').addClass('result');
 
-  setTimeout(function() {
-    hideWorking();
-  }, 2000);
+  updateVisualResult(sequenceData);
+
+  hideWorking();
 
 });
 
