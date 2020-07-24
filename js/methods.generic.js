@@ -109,14 +109,12 @@ function updateVisualResult(data) {
 	$('#visualResultContainer').empty();
 
 	for (var e = 0; e < data.length; e++) {
-		
 		var evalTitle = $('<div class="evalTitle">'+ data[e].fileName +'</div>');
 		var evalBody = $('<div class="evalBody"></div>');
 		var detectedSequences = $('<ul class="detectedSequences"></ul>');
 		var evalItem = $('<ul class="actionList"></ul>');
 		
 		for (var s = 0; s < data[e].sequences.length; s++) {
-			
 			var prioritizedClass = (data[e].sequences[s]['prioritized']) ? 'prioritized' : '';
 			var sequencesListItem = $('<li class="sequencesListItem '+ prioritizedClass +'" title="'+ data[e].sequences[s]['sequenceLabel'] +'">'+ data[e].sequences[s]['sequenceNumber'] +': '+ data[e].sequences[s]['sequenceLabel'] + '</li>');
 			var leftValue = 153 * data[e].sequences[s]['actionIndexFrom'];
@@ -127,30 +125,23 @@ function updateVisualResult(data) {
 				width: widthValue - 3 + 'px',
 				backgroundColor: data[e].sequences[s]['sequenceColor']
 			});
-
 			detectedSequences.append(sequencesListItem);
-
 		}
 
 		for (var i = 0; i < data[e].actions.length; i++) {
-			
 			var actionListItem = $('<li class="actionListItem" title="'+ (i+1) +'">'+ data[e].actions[i]['Aktion'] + '</li>');
 			evalItem.append(actionListItem);
-
 		}
 
 		evalBody.append(detectedSequences, evalItem);
 		$('#visualResultContainer').append(evalTitle, evalBody);
-
 		detectedSequences.CollisionDetection({spacing:0, includeVerticalMargins:true})
-
 	}
 }
 
 function getSheetData(sheetID, callback) {
 	$.getJSON('https://spreadsheets.google.com/feeds/list/'+ sheetID +'/od6/public/values?alt=json',function(data){
 		var cleanData = [];
-
 		var rows = data.feed.entry;
 
 		for (var i = 0; i < rows.length; i++) {

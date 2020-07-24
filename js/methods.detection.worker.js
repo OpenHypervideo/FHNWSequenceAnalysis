@@ -128,12 +128,14 @@ function workerWrapper() {
     var sequenceGroups = getSequenceGroups(sortedSequences);
     
     //prioritizedSequences = detectPrioritizedSequences(sequenceGroups[0]);
+    
     for (var sg = 0; sg < sequenceGroups.length; sg++) {
       var prioritizedSequencesInGroup = detectPrioritizedSequences(sequenceGroups[sg]);
       for (var ps = 0; ps < prioritizedSequencesInGroup.length; ps++) {
         prioritizedSequences.push(prioritizedSequencesInGroup[ps]);
       }
     }
+    
     return prioritizedSequences;
 
   }
@@ -196,19 +198,9 @@ function workerWrapper() {
                 potentialSequenceMatchCopy.averagePriority = newAveragePriority;
                 potentialSequenceMatchCopy.accumulatedLength += (subCandidates[s].actionIndexTo - subCandidates[s].actionIndexFrom + 1);
                 potentialSequenceMatchCopy.accumulatedGaps += subCandidates[s].actionIndexFrom - lastSequence.actionIndexTo - 1;
-                var alreadyExists = false;
-                for (var p2 = 0; p2 < potentialSequenceMatches.length; p2++) {
-                  if (JSON.stringify(potentialSequenceMatches[p2].sequences) == JSON.stringify(potentialSequenceMatchCopy.sequences)) {
-                    alreadyExists = true;
-                    break;
-                  }
-                }
-                if (!alreadyExists) {
-                  potentialSequenceMatches.push(potentialSequenceMatchCopy);
-                  if (potentialSequenceMatchCopy.accumulatedLength > maxLength) maxLength = potentialSequenceMatchCopy.accumulatedLength;
-                  if (potentialSequenceMatchCopy.averagePriority < minPriority) minPriority = potentialSequenceMatchCopy.averagePriority;
-                }
-
+                potentialSequenceMatches.push(potentialSequenceMatchCopy);
+                if (potentialSequenceMatchCopy.accumulatedLength > maxLength) maxLength = potentialSequenceMatchCopy.accumulatedLength;
+                if (potentialSequenceMatchCopy.averagePriority < minPriority) minPriority = potentialSequenceMatchCopy.averagePriority;
               } else {
                 var newAveragePriority = ((potentialSequenceMatches[p].averagePriority * potentialSequenceMatches[p].sequences.length) + subCandidates[s].staticPriority) / (potentialSequenceMatches[p].sequences.length+1);
                 
@@ -240,9 +232,11 @@ function workerWrapper() {
       if ((sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1) > maxLength) maxLength = (sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1);
       if (sequenceSubset[i].staticPriority < minPriority) minPriority = sequenceSubset[i].staticPriority;
 
+      /*
       if (sequenceSubset.length > 6 && sequenceSubset[i].actionIndexFrom > sequenceSubset[5].actionIndexFrom) {
         break;
       }
+      */
 
     }
     
