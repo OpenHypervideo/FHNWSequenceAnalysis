@@ -172,22 +172,23 @@ button:hover, button:active, button:focus {
 }
 
 #fileDropContainer {
-	height: auto;
-	line-height: calc(100vh - 250px);
+	height: calc(100vh - 210px);
+	line-height: 30px;
 	background-color: #EBF2FB;
 	border: 1px dashed #9BA2BE;
 	color: #333;
-	padding: 20px;
+	padding: 15% 20px;
 	margin-bottom: 10px;
 	clear: both;
 	border-radius: 3px;
 	text-align: center;
-	transition-property: line-height;
+	transition-property: height, padding;
 	transition-duration: 600ms;
 }
 
 body.result #fileDropContainer {
-	line-height: 20px;
+	height: 90px;
+	padding: 10px 20px;
 }
 
 #fileDropContainer.dragOver {

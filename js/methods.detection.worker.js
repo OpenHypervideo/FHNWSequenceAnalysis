@@ -98,8 +98,8 @@ function workerWrapper() {
       "4.2": 10,
       "4.3": 9,
       "5.1": 11,
-      "5.2": 11,
-      "5.3": 11
+      "5.2": 12,
+      "5.3": 12
     };
 
     for (var i = 0; i < rawSequences.length; i++) {
@@ -145,8 +145,10 @@ function workerWrapper() {
     // step 1: get potential candidates 
     // (sequences in the subset which don't overlap)
     var potentialSequenceMatches = [],
+        minLength = 100,
         maxLength = 1,
-        minPriority = 11;
+        minPriority = 12,
+        maxPriority = 1;
 
     for (var i = 0; i < sequenceSubset.length; i++) {
       
@@ -183,9 +185,11 @@ function workerWrapper() {
             'sequences': potentialPairCandidates
           });
 
+          if (accumulatedPairLength < minLength) minLength = accumulatedPairLength;
           if (accumulatedPairLength > maxLength) maxLength = accumulatedPairLength;
-          if ((sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2 < minPriority) minPriority = (sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2;
-            
+          if ((sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2 > minPriority) minPriority = (sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2;
+          if ((sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2 < maxPriority) maxPriority = (sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2;
+
           for (var p = 0; p < potentialSequenceMatches.length; p++) {
             var lastSequence = potentialSequenceMatches[p].sequences[potentialSequenceMatches[p].sequences.length -1];
             
@@ -199,8 +203,10 @@ function workerWrapper() {
                 potentialSequenceMatchCopy.accumulatedLength += (subCandidates[s].actionIndexTo - subCandidates[s].actionIndexFrom + 1);
                 potentialSequenceMatchCopy.accumulatedGaps += subCandidates[s].actionIndexFrom - lastSequence.actionIndexTo - 1;
                 potentialSequenceMatches.push(potentialSequenceMatchCopy);
+                if (potentialSequenceMatchCopy.accumulatedLength < minLength) minLength = potentialSequenceMatchCopy.accumulatedLength;
                 if (potentialSequenceMatchCopy.accumulatedLength > maxLength) maxLength = potentialSequenceMatchCopy.accumulatedLength;
-                if (potentialSequenceMatchCopy.averagePriority < minPriority) minPriority = potentialSequenceMatchCopy.averagePriority;
+                if (potentialSequenceMatchCopy.averagePriority > minPriority) minPriority = potentialSequenceMatchCopy.averagePriority;
+                if (potentialSequenceMatchCopy.averagePriority < maxPriority) maxPriority = potentialSequenceMatchCopy.averagePriority;
               } else {
                 var newAveragePriority = ((potentialSequenceMatches[p].averagePriority * potentialSequenceMatches[p].sequences.length) + subCandidates[s].staticPriority) / (potentialSequenceMatches[p].sequences.length+1);
                 
@@ -209,8 +215,10 @@ function workerWrapper() {
                 potentialSequenceMatches[p].accumulatedLength += (subCandidates[s].actionIndexTo - subCandidates[s].actionIndexFrom + 1);
                 potentialSequenceMatches[p].accumulatedGaps += subCandidates[s].actionIndexFrom - lastSequence.actionIndexTo - 1;
 
+                if (potentialSequenceMatches[p].accumulatedLength < minLength) minLength = potentialSequenceMatches[p].accumulatedLength;
                 if (potentialSequenceMatches[p].accumulatedLength > maxLength) maxLength = potentialSequenceMatches[p].accumulatedLength;
-                if (potentialSequenceMatches[p].averagePriority < minPriority) minPriority = potentialSequenceMatches[p].averagePriority;
+                if (potentialSequenceMatches[p].averagePriority > minPriority) minPriority = potentialSequenceMatches[p].averagePriority;
+                if (potentialSequenceMatches[p].averagePriority < maxPriority) maxPriority = potentialSequenceMatches[p].averagePriority;
               }
             }
           }
@@ -229,8 +237,10 @@ function workerWrapper() {
         'sequences': sequenceInArray
       });
       
+      if ((sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1) < minLength) minLength = (sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1);
       if ((sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1) > maxLength) maxLength = (sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1);
-      if (sequenceSubset[i].staticPriority < minPriority) minPriority = sequenceSubset[i].staticPriority;
+      if (sequenceSubset[i].staticPriority > minPriority) minPriority = sequenceSubset[i].staticPriority;
+      if (sequenceSubset[i].staticPriority < maxPriority) maxPriority = sequenceSubset[i].staticPriority;
 
       /*
       if (sequenceSubset.length > 6 && sequenceSubset[i].actionIndexFrom > sequenceSubset[5].actionIndexFrom) {
@@ -241,11 +251,14 @@ function workerWrapper() {
     }
     
     var lengthFactor = 1.0,
-        priorityFactor = 1.9;
+        priorityFactor = 1.8;
+
+    //minPriority = 12;
+    //maxPriority = 1;
     
     for (var sm = 0; sm < potentialSequenceMatches.length; sm++) {
-      potentialSequenceMatches[sm].scoreLength = potentialSequenceMatches[sm].accumulatedLength / maxLength;
-      potentialSequenceMatches[sm].scorePriority = (11-potentialSequenceMatches[sm].averagePriority)/(11-1);
+      potentialSequenceMatches[sm].scoreLength = (potentialSequenceMatches[sm].accumulatedLength-minLength)/(maxLength-minLength);
+      potentialSequenceMatches[sm].scorePriority = ((minPriority-potentialSequenceMatches[sm].averagePriority)/(minPriority-maxPriority))*potentialSequenceMatches[sm].scoreLength;
       potentialSequenceMatches[sm].rating = ((potentialSequenceMatches[sm].scoreLength*lengthFactor) + (potentialSequenceMatches[sm].scorePriority*priorityFactor)) / 2;
 
     }
@@ -313,7 +326,7 @@ function workerWrapper() {
     });
     */
 
-    //console.log(potentialSequenceMatches);
+    console.log(potentialSequenceMatches[0]);
       
     return potentialSequenceMatches[0].sequences;
 
