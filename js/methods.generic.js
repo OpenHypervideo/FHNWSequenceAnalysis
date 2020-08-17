@@ -1,3 +1,15 @@
+var settingMapping = {
+	'I': 'individual',
+	'C': 'collaborative'
+}
+
+var scenarioMapping = {
+	'A': 'annotations',
+	'H': 'hyperlinks',
+	'C': 'controlGroup'
+}
+
+
 function handleFileDrop(evt) {
 	evt.stopPropagation();
 	evt.preventDefault();
@@ -19,8 +31,17 @@ function handleFileDrop(evt) {
 					type: 'array'
 				});
 
+				var fileNameString = file.name,
+					fileNameParts = fileNameString.split('.')[0].split('_'),
+					settingString = fileNameParts[0].split('')[0],
+					scenarioString = fileNameParts[0].split('')[1],
+					personIDString = fileNameParts[0].match(/\d+/g).join('');
+
 				var dataJSON = {
-					fileName: file.name,
+					fileName: fileNameString,
+					setting: settingMapping[settingString],
+					scenario: scenarioMapping[scenarioString],
+					personID: personIDString,
 					sequences: [],
 					actions: cleanActionData(XLSX.utils.sheet_to_json(workbook.Sheets.Table))
 				};
@@ -72,8 +93,17 @@ function loadSampleData() {
 				type: 'array'
 			});
 
+			var fileNameString = this.responseURL.split('/').pop(),
+				fileNameParts = fileNameString.split('.')[0].split('_'),
+				settingString = fileNameParts[0].split('')[0],
+				scenarioString = fileNameParts[0].split('')[1],
+				personIDString = fileNameParts[0].match(/\d+/g).join('');
+
 			var dataJSON = {
-				fileName: this.responseURL.split('/').pop(),
+				fileName: fileNameString,
+				setting: settingMapping[settingString],
+				scenario: scenarioMapping[scenarioString],
+				personID: personIDString,
 				sequences: [],
 				actions: cleanActionData(XLSX.utils.sheet_to_json(workbook.Sheets.Table))
 			};
@@ -99,7 +129,7 @@ function updateFileList(data) {
 	$('#fileList').empty();
 	
 	for (var i = 0; i < data.length; i++) {
-		$('#fileList').append('<li>'+ data[i].fileName +'</li>');
+		$('#fileList').append('<li><i class="far fa-file-alt"></i>'+ data[i].fileName +'<i class="fa fa-times"></i></li>');
 	}
 
 }
@@ -109,7 +139,7 @@ function updateVisualResult(data) {
 	$('#visualResultContainer').empty();
 
 	for (var e = 0; e < data.length; e++) {
-		var evalTitle = $('<div class="evalTitle">'+ data[e].fileName +'</div>');
+		var evalTitle = $('<h4 class="evalTitle">'+ data[e].fileName +'</h4>');
 		var evalBody = $('<div class="evalBody"></div>');
 		var detectedSequences = $('<ul class="detectedSequences"></ul>');
 		var evalItem = $('<ul class="actionList"></ul>');
@@ -198,6 +228,73 @@ function cleanActionData(originActionArray) {
 	return cleanActionArray;
 }
 
+function renderTable(targetElemSelector, name, tableData, columns, additionalClasses) {
+	var tableID = toCamelCase(name);
+	var classes = (additionalClasses) ? additionalClasses : ''
+	var tableContainer = $('<div class="tableContainer '+ classes +'" data-table-id="'+ tableID +'"></div>');
+	var tableTitle = $('<h4>'+ name +'</h4>');
+	var tableElem = $('<table id="'+ tableID +'"></table>');
+
+	tableContainer.append(tableTitle, tableElem);
+	$(targetElemSelector).append(tableContainer);
+	dataTableIDList.push(tableID);
+
+	tableElem.bootstrapTable({
+		showToggle: true,
+		showColumns: true,
+		multiToggleDefaults: [],
+		search: true,
+		searchAlign: 'left',
+		showExport: true,
+		exportDataType: 'basic',
+		exportTypes: ['csv', 'excel', 'txt', 'json'],
+		exportOptions: {
+			htmlContent: true,
+			excelstyles: ['mso-data-placement', 'color', 'background-color'],
+			fileName: 'Export-'+ getTodayString() +'-'+ name.replace(/\s/g, '-'),
+			onCellHtmlData: function(cell, rowIndex, colIndex, htmlData) {
+				var cleanedString = cell.html().replace(/<br\s*[\/]?>/gi, "\r\n");
+				//htmlData = cleanedString;
+				return htmlData;
+			}
+		},
+		sortName: columns[0].field,
+		cardView: false,
+		locale: 'de-DE',
+		columns: columns,
+		data: tableData
+	});
+}
+
+function resetTables(tableIDList) {
+	for (var i = 0; i < tableIDList.length; i++) {
+		$('#'+ tableIDList[i]).bootstrapTable('destroy');
+		$('.tableContainer[data-table-id="'+ tableIDList[i] +'"]').remove();
+	}
+}
+
+function getTodayString() {
+	var today = new Date(),
+		year = today.getFullYear(),
+		month = ('0' + (today.getMonth() + 1)).slice(-2),
+		day = ('0' + today.getDate()).slice(-2),
+		hours = ('0' + today.getHours()).slice(-2),
+		minutes = ('0' + today.getMinutes()).slice(-2),
+		todayString = year +''+ month +''+ day +'-'+ hours +''+ minutes;
+
+	return todayString;
+}
+
+function toCamelCase(str) {
+    var camelCased = str.replace(/[-_ .]+(.)?/g, function (match, p) {
+        if (p) {
+            return p.toUpperCase();
+        }
+        return '';
+    }).replace(/[^\w]/gi, '');
+    return camelCased;
+};
+
 function convertTimestampToDateString(timestamp) {
 	var dateObj = new Date(timestamp);
 	return dateObj.toLocaleDateString('de-DE');
@@ -209,7 +306,6 @@ function convertTimestampToTimeString(timestamp) {
 }
 
 function formatTime(aNumber) {
-
 	var hours, minutes, seconds, hourValue;
 
 	seconds 	= Math.ceil(aNumber);
@@ -227,7 +323,6 @@ function formatTime(aNumber) {
 	}
 
 	return hourValue + minutes + ':' + seconds;
-
 }
 
 function getRandomInt(min, max) {
@@ -249,7 +344,6 @@ function hideWorking() {
 			$('.workingMessage').html('');
 		});
 	}, 2000);
-	
 }
 
 /*

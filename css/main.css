@@ -32,6 +32,10 @@ h1, h2, h3, h4, h5 {
 	font-weight: normal;
 }
 
+h4, h5 {
+	font-size: 16px;
+}
+
 hr {
 	background-color: #cfcfcf;
 	height: 1px;
@@ -76,11 +80,12 @@ button:hover, button:active, button:focus {
 
 .workingIndicator {
     position: fixed;
-    top: 100px;
+    top: 0px;
     left: 0px;
     width: 100%;
-    height: calc(100% - 100px);
+    height: 100%;
     background: rgba(255,255,255,.9);
+    pointer-events: none;
     display: none;
 }
 
@@ -187,7 +192,7 @@ button:hover, button:active, button:focus {
 }
 
 body.result #fileDropContainer {
-	height: 90px;
+	height: 50px;
 	padding: 10px 20px;
 }
 
@@ -201,18 +206,20 @@ body.result #fileDropContainer {
 
 .fileContainer {
 	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
-/*
 .fileContainer ul {
 	list-style: none;
 	padding: 0px;
 	margin: none;
+	max-height: 90px;
+	overflow: scroll;
 }
 
 .fileContainer ul li {
 	float: left;
-	padding: 10px;
+	padding: 2px 6px;
 	margin: 0 4px 4px 0;
 	border: 1px solid transparent;
 	background: #f8f8f8;
@@ -220,7 +227,6 @@ body.result #fileDropContainer {
 
 .fileContainer ul li:hover {
 	border-color: #afafaf;
-	cursor: pointer;
 }
 
 .fileContainer ul li.active {
@@ -228,7 +234,20 @@ body.result #fileDropContainer {
 	box-shadow: inset 0 0 6px #afafaf;
 	background: #efefef;
 }
-*/
+
+.fileContainer ul li i.fa-file-alt {
+	margin-right: 6px;
+}
+
+.fileContainer ul li i.fa-times {
+	margin-left: 10px;
+	opacity: .7;
+}
+
+.fileContainer ul li i.fa-times:hover {
+	opacity: 1;
+	cursor: pointer;
+}
 
 .resultContainer {
 	clear: both;
@@ -282,4 +301,9 @@ body.result #fileDropContainer {
 .resultContainer #visualResultContainer li.sequencesListItem.prioritized {
 	border: 3px solid #000;
 	padding-top: 0px;
+	line-height: 17px;
+}
+
+.tableContainer {
+	margin-top: 15px;
 }

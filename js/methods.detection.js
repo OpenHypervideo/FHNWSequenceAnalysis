@@ -1,29 +1,25 @@
-// your custom "queryable" worker
-var myTask = new QueryableWorker(workerWrapper);
+var analysisTask = new QueryableWorker(workerWrapper);
 
-// your custom "listeners"
-myTask.addListener('returnResult', function (result) {
-  
+analysisTask.addListener('returnResult', function (result, cleanResult) {
   //console.log(result);
   sequenceData = result;
+  cleanSequenceData = cleanResult;
 
   $('body').addClass('result');
-
+  updateFileList(sequenceData);
   updateVisualResult(sequenceData);
-
+  updateDataTables();
   hideWorking();
 
 });
 
-myTask.addListener('logMessage', function (message) {
-  
+analysisTask.addListener('logMessage', function (message) {
   showWorking(message);
-
 });
 
 function analyseSequences() {
   showWorking('Analysing sequences ...');
-  myTask.sendQuery('getResult', sequenceData);
+  analysisTask.sendQuery('getResult', sequenceData);
 }
 
 function getRules() {

@@ -1,5 +1,6 @@
 var sequenceData = [];
 var sequenceRules = [];
+var cleanSequenceData = [];
 
 $(document).ready( function() {
 
