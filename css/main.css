@@ -191,6 +191,10 @@ button:hover, button:active, button:focus {
 	transition-duration: 600ms;
 }
 
+#fileDropContainer .btn {
+	vertical-align: initial;
+}
+
 body.result #fileDropContainer {
 	height: 50px;
 	padding: 10px 20px;
