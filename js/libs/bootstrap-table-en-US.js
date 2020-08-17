@@ -669,103 +669,103 @@
 	});
 
 	/**
-	* Bootstrap Table German translation
-	* Author: Paul Mohr - Sopamo<p.mohr@sopamo.de>
-	*/
+	 * Bootstrap Table English translation
+	 * Author: Zhixin Wen<wenzhixin2010@gmail.com>
+	 */
 
-	$.fn.bootstrapTable.locales['de-DE'] = {
+	$.fn.bootstrapTable.locales['en-US'] = {
 	  formatLoadingMessage: function formatLoadingMessage() {
-	    return 'Lade, bitte warten';
+	    return 'Loading, please wait';
 	  },
 	  formatRecordsPerPage: function formatRecordsPerPage(pageNumber) {
-	    return "".concat(pageNumber, " Zeilen pro Seite.");
+	    return "".concat(pageNumber, " rows per page");
 	  },
 	  formatShowingRows: function formatShowingRows(pageFrom, pageTo, totalRows, totalNotFiltered) {
 	    if (totalNotFiltered !== undefined && totalNotFiltered > 0 && totalNotFiltered > totalRows) {
-	      return "Zeige Zeile ".concat(pageFrom, " bis ").concat(pageTo, " von ").concat(totalRows, " Zeile").concat(totalRows > 1 ? 'n' : '', " (Gefiltert von ").concat(totalNotFiltered, " Zeile").concat(totalNotFiltered > 1 ? 'n' : '', ")");
+	      return "Showing ".concat(pageFrom, " to ").concat(pageTo, " of ").concat(totalRows, " rows (filtered from ").concat(totalNotFiltered, " total rows)");
 	    }
 
-	    return "Zeige Zeile ".concat(pageFrom, " bis ").concat(pageTo, " von ").concat(totalRows, " Zeile").concat(totalRows > 1 ? 'n' : '', ".");
+	    return "Showing ".concat(pageFrom, " to ").concat(pageTo, " of ").concat(totalRows, " rows");
 	  },
 	  formatSRPaginationPreText: function formatSRPaginationPreText() {
-	    return 'Vorherige Seite';
+	    return 'previous page';
 	  },
 	  formatSRPaginationPageText: function formatSRPaginationPageText(page) {
-	    return "Zu Seite ".concat(page);
+	    return "to page ".concat(page);
 	  },
 	  formatSRPaginationNextText: function formatSRPaginationNextText() {
-	    return 'Nächste Seite';
+	    return 'next page';
 	  },
 	  formatDetailPagination: function formatDetailPagination(totalRows) {
-	    return "Zeige ".concat(totalRows, " Zeile").concat(totalRows > 1 ? 'n' : '', ".");
+	    return "Showing ".concat(totalRows, " rows");
 	  },
 	  formatClearSearch: function formatClearSearch() {
-	    return 'Lösche Filter';
+	    return 'Clear Search';
 	  },
 	  formatSearch: function formatSearch() {
-	    return 'Suchen';
+	    return 'Search';
 	  },
 	  formatNoMatches: function formatNoMatches() {
-	    return 'Keine passenden Ergebnisse gefunden';
+	    return 'No matching records found';
 	  },
 	  formatPaginationSwitch: function formatPaginationSwitch() {
-	    return 'Verstecke/Zeige Nummerierung';
+	    return 'Hide/Show pagination';
 	  },
 	  formatPaginationSwitchDown: function formatPaginationSwitchDown() {
-	    return 'Zeige Nummerierung';
+	    return 'Show pagination';
 	  },
 	  formatPaginationSwitchUp: function formatPaginationSwitchUp() {
-	    return 'Verstecke Nummerierung';
+	    return 'Hide pagination';
 	  },
 	  formatRefresh: function formatRefresh() {
-	    return 'Neu laden';
+	    return 'Refresh';
 	  },
 	  formatToggle: function formatToggle() {
-	    return 'Umschalten';
+	    return 'Toggle';
 	  },
 	  formatToggleOn: function formatToggleOn() {
-	    return 'Normale Ansicht';
+	    return 'Show card view';
 	  },
 	  formatToggleOff: function formatToggleOff() {
-	    return 'Kartenansicht';
+	    return 'Hide card view';
 	  },
 	  formatColumns: function formatColumns() {
-	    return 'Spalten';
+	    return 'Columns';
 	  },
 	  formatColumnsToggleAll: function formatColumnsToggleAll() {
-	    return 'Alle umschalten';
+	    return 'Toggle all';
 	  },
 	  formatFullscreen: function formatFullscreen() {
-	    return 'Vollbild';
+	    return 'Fullscreen';
 	  },
 	  formatAllRows: function formatAllRows() {
-	    return 'Alle';
+	    return 'All';
 	  },
 	  formatAutoRefresh: function formatAutoRefresh() {
-	    return 'Automatisches Neuladen';
+	    return 'Auto Refresh';
 	  },
 	  formatExport: function formatExport() {
-	    return 'Datenexport';
+	    return 'Export data';
 	  },
 	  formatJumpTo: function formatJumpTo() {
 	    return 'GO';
 	  },
 	  formatAdvancedSearch: function formatAdvancedSearch() {
-	    return 'Erweiterte Suche';
+	    return 'Advanced search';
 	  },
 	  formatAdvancedCloseButton: function formatAdvancedCloseButton() {
-	    return 'Schließen';
+	    return 'Close';
 	  },
 	  formatFilterControlSwitch: function formatFilterControlSwitch() {
-	    return 'Verstecke/Zeige controls';
+	    return 'Hide/Show controls';
 	  },
 	  formatFilterControlSwitchHide: function formatFilterControlSwitchHide() {
-	    return 'Verstecke controls';
+	    return 'Hide controls';
 	  },
 	  formatFilterControlSwitchShow: function formatFilterControlSwitchShow() {
-	    return 'Zeige controls';
+	    return 'Show controls';
 	  }
 	};
-	$.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['de-DE']);
+	$.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US']);
 
 })));
