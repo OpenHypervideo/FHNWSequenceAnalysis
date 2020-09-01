@@ -228,7 +228,7 @@ function cleanActionData(originActionArray) {
 	return cleanActionArray;
 }
 
-function renderTable(targetElemSelector, name, tableData, columns, additionalClasses) {
+function renderTable(targetElemSelector, name, tableData, columns, additionalClasses, enableSearch, enableFooter) {
 	var tableID = toCamelCase(name);
 	var classes = (additionalClasses) ? additionalClasses : ''
 	var tableContainer = $('<div class="tableContainer '+ classes +'" data-table-id="'+ tableID +'"></div>');
@@ -243,9 +243,11 @@ function renderTable(targetElemSelector, name, tableData, columns, additionalCla
 		showToggle: true,
 		showColumns: true,
 		multiToggleDefaults: [],
-		search: true,
+		search: enableSearch,
 		searchAlign: 'left',
+		buttonsAlign: (enableSearch) ? 'right':'left',
 		showExport: true,
+		showFooter: enableFooter,
 		exportDataType: 'basic',
 		exportTypes: ['csv', 'excel', 'txt', 'json'],
 		exportOptions: {

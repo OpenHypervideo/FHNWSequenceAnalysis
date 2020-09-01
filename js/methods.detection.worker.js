@@ -82,12 +82,19 @@ function workerWrapper() {
       var matches = matchFn(encodedActionArray);
       //console.log(pattern);
       for (match of matches) {
+        var actionsInSequence = [];
+        for (var i = 0; i < actionArray.length; i++) {
+          if (i >= match.startPos && i <= match.endPos) {
+            actionsInSequence.push(actionArray[i]);
+          }
+        }
         sequenceResults.push({
           sequenceLabel: pattern.sequenceLabel,
           sequenceNumber: pattern.sequenceNumber,
           sequenceColor: pattern.sequenceColor,
           actionIndexFrom: match.startPos,
           actionIndexTo: match.endPos,
+          actions: actionsInSequence
         });
       }
     }
@@ -285,7 +292,11 @@ function workerWrapper() {
       potentialSequenceMatches[sm].scorePriority = ((minPriority-potentialSequenceMatches[sm].averagePriority)/(minPriority-maxPriority));
       potentialSequenceMatches[sm].scoreHeterogeneity = ((minSequences-potentialSequenceMatches[sm].sequences.length)/(minSequences-maxSequences));
       
-      potentialSequenceMatches[sm].rating = ((potentialSequenceMatches[sm].scoreLength*lengthFactor) + ((potentialSequenceMatches[sm].scorePriority*potentialSequenceMatches[sm].scoreLength)*priorityFactor) + (potentialSequenceMatches[sm].scoreHeterogeneity*heterogeneityFactor))  / 3;
+      potentialSequenceMatches[sm].rating = (
+        (potentialSequenceMatches[sm].scoreLength*lengthFactor) + 
+        ((potentialSequenceMatches[sm].scorePriority*potentialSequenceMatches[sm].scoreLength)*priorityFactor) + 
+        (potentialSequenceMatches[sm].scoreHeterogeneity*heterogeneityFactor)
+      )/3;
 
     }
 
@@ -355,7 +366,7 @@ function workerWrapper() {
     */
     
     //console.log(minPriority, maxPriority);
-    //console.log(potentialSequenceMatches);
+    console.log(potentialSequenceMatches);
       
     return potentialSequenceMatches[0].sequences;
 
