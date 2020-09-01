@@ -310,4 +310,9 @@ body.result #fileDropContainer {
 
 .tableContainer {
 	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.tableContainer h4 {
+	margin-bottom: 0px;
 }
