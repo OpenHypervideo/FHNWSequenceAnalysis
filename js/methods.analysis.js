@@ -131,7 +131,7 @@ function updateDataTables() {
 				items.forEach(function(item) {
 					totalCount = totalCount + item.percentageUsed;
 				});
-				return totalCount;
+				return Math.round(totalCount*100)/100;
 			}
 		},
 		{
@@ -144,7 +144,7 @@ function updateDataTables() {
 				items.forEach(function(item) {
 					totalCount = totalCount + item.percentageTotal;
 				});
-				return totalCount;
+				return Math.round(totalCount*100)/100;
 			}
 		}
 	];
