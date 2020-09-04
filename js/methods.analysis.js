@@ -51,12 +51,126 @@ function updateDataTables() {
 	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences → Collaborative | Control Group', sequenceCountDataCC.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
 	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences → Collaborative | Control Group', sequenceCountDataCC.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
 
+	var mergedSequenceColumnData = [
+		{
+			field: 'group',
+			title: 'Gruppe',
+			sortable: true,
+			searchable: false
+		},
+		{
+			field: 'user',
+			title: 'TN',
+			sortable: true,
+			searchable: true
+		},
+		{
+			field: 'scenario',
+			title: 'Lernaufgabe',
+			sortable: true,
+			searchable: false
+		},
+		{
+			field: 'setting',
+			title: 'Lernsetting',
+			sortable: true,
+			searchable: false
+		}
+	];
 	// Render Sequence Count Data per Sequence
+	var mergedTableData = [];
 	for (var s = 0; s < cleanSequenceData.length; s++) {
-		var sequenceCountData = getSequenceCountData(cleanSequenceData[s]);
-		renderTable('#singleAnalysisResultContainer', cleanSequenceData[s].fileName +' Sequences', sequenceCountData.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-		renderTable('#singleAnalysisResultContainer', cleanSequenceData[s].fileName +' Main Sequences', sequenceCountData.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
+		var sequenceCountData = getSequenceCountData(cleanSequenceData[s]),
+			userString = cleanSequenceData[s].fileName.split('_')[0],
+			groupString = userString.substring(0, 2),
+			scenarioString = '';
+
+		if (groupString == 'IA') {
+			groupString = '1';
+		} else if (groupString == 'IH') {
+			groupString = '2';
+		} else if (groupString == 'IC') {
+			groupString = '3';
+		} else if (groupString == 'CA') {
+			groupString = '4';
+		} else if (groupString == 'CH') {
+			groupString = '5';
+		} else if (groupString == 'CC') {
+			groupString = '6';
+		}
+
+		if (cleanSequenceData[s].scenario == 'annotations') {
+			scenarioString = '1';
+		} else if (cleanSequenceData[s].scenario == 'hyperlinks') {
+			scenarioString = '2';
+		} else {
+			scenarioString = '3';
+		}
+		var rowData = {
+			'group': groupString,
+			'user': userString,
+			'scenario': scenarioString,
+			'setting': (cleanSequenceData[s].setting == 'individual') ? '1' : '2'
+		}
+
+		console.log(sequenceCountData);
+		for (var sc = 0; sc < sequenceCountData.sequences.length; sc++) {
+			var absoluteFieldName = sequenceCountData.sequences[sc].sequenceNumber + '_absolute';
+			if (s === 0) {
+				mergedSequenceColumnData.push({
+					field: absoluteFieldName,
+					title: sequenceCountData.sequences[sc].sequenceNumber + '_abs',
+					sortable: true,
+					searchable: false
+				});
+			}
+			rowData[absoluteFieldName] = sequenceCountData.sequences[sc].count;
+		}
+		for (var scm = 0; scm < sequenceCountData.mainSequences.length; scm++) {
+			var absoluteFieldName = sequenceCountData.mainSequences[scm].sequenceNumber + '_absolute';
+			if (s === 0) {
+				mergedSequenceColumnData.push({
+					field: absoluteFieldName,
+					title: sequenceCountData.mainSequences[scm].sequenceNumber + '_abs',
+					sortable: true,
+					searchable: false
+				});
+			}
+			rowData[absoluteFieldName] = sequenceCountData.mainSequences[scm].count;
+		}
+		for (var sc = 0; sc < sequenceCountData.sequences.length; sc++) {
+			var relativeFieldName = sequenceCountData.sequences[sc].sequenceNumber + '_relative';
+			if (s === 0) {
+				mergedSequenceColumnData.push({
+					field: relativeFieldName,
+					title: sequenceCountData.sequences[sc].sequenceNumber + '_rel',
+					sortable: true,
+					searchable: false
+				});
+			}
+			rowData[relativeFieldName] = sequenceCountData.sequences[sc].percentage;
+		}
+		for (var scm = 0; scm < sequenceCountData.mainSequences.length; scm++) {
+			var relativeFieldName = sequenceCountData.mainSequences[scm].sequenceNumber + '_relative';	
+			if (s === 0) {
+				mergedSequenceColumnData.push({
+					field: relativeFieldName,
+					title: sequenceCountData.mainSequences[scm].sequenceNumber + '_rel',
+					sortable: true,
+					searchable: false
+				});
+			}
+			rowData[relativeFieldName] = sequenceCountData.mainSequences[scm].percentage;
+		}
+
+		mergedTableData.push(rowData);
 	}
+	
+	renderTable('#singleAnalysisResultContainer', '', mergedTableData, mergedSequenceColumnData, 'col-12', true, false);
+	/*
+	renderTable('#singleAnalysisResultContainer', cleanSequenceData[s].fileName +' Sequences', sequenceCountData.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
+	renderTable('#singleAnalysisResultContainer', cleanSequenceData[s].fileName +' Main Sequences', sequenceCountData.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
+	*/
 
 	// Render Action Data
 	var genericActionColumnData = [
@@ -274,7 +388,7 @@ function getSequenceCountData(data, setting, scenario) {
 	//iterate countsPerSequence 
 	for (var sequenceNumber in countsPerSequence) {
 		// push to table data
-		var percentage = 100*(countsPerSequence[sequenceNumber]/totalSequenceCount);
+		var percentage = (totalSequenceCount == 0) ? 0 : 100*(countsPerSequence[sequenceNumber]/totalSequenceCount);
 		returnData.sequences.push({
 			'sequenceNumber': sequenceNumber,
 			'count': countsPerSequence[sequenceNumber],
@@ -285,7 +399,7 @@ function getSequenceCountData(data, setting, scenario) {
 	//iterate countsPerMainSequence 
 	for (var sequenceNumber in countsPerMainSequence) {
 		// push to table data
-		var percentage = 100*(countsPerMainSequence[sequenceNumber]/totalSequenceCount);
+		var percentage = (totalSequenceCount == 0) ? 0 : 100*(countsPerMainSequence[sequenceNumber]/totalSequenceCount);
 		returnData.mainSequences.push({
 			'sequenceNumber': sequenceNumber,
 			'count': countsPerMainSequence[sequenceNumber],
@@ -296,8 +410,8 @@ function getSequenceCountData(data, setting, scenario) {
 	//iterate countsPerAction 
 	for (var actionName in countsPerAction) {
 		// push to table data
-		var percentageTotal = 100*(countsPerAction[actionName]/returnData.statistics[0].actionsTotal);
-		var percentageUsed = 100*(countsPerUsedAction[actionName]/returnData.statistics[0].actionsTotal);
+		var percentageTotal = (returnData.statistics[0].actionsTotal == 0) ? 0 : 100*(countsPerAction[actionName]/returnData.statistics[0].actionsTotal);
+		var percentageUsed = (returnData.statistics[0].actionsTotal == 0) ? 0 : 100*(countsPerUsedAction[actionName]/returnData.statistics[0].actionsTotal);
 		returnData.actions.push({
 			'actionName': actionName,
 			'countTotal': countsPerAction[actionName],
