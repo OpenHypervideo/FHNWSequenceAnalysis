@@ -150,7 +150,7 @@ function workerWrapper() {
 
     var sequenceGroups = getSequenceGroups(sortedSequences);
     
-    //prioritizedSequences = detectPrioritizedSequences(sequenceGroups[0]);
+    //prioritizedSequences = detectPrioritizedSequences(sequenceGroups[5]);
     
     for (var sg = 0; sg < sequenceGroups.length; sg++) {
       var prioritizedSequencesInGroup = detectPrioritizedSequences(sequenceGroups[sg]);
@@ -158,6 +158,7 @@ function workerWrapper() {
         prioritizedSequences.push(prioritizedSequencesInGroup[ps]);
       }
     }
+    
     
     return prioritizedSequences;
 
@@ -221,7 +222,7 @@ function workerWrapper() {
             
             if (subCandidates[s].actionIndexFrom > lastSequence.actionIndexTo) {
               if (nextCandidate && nextCandidate.actionIndexFrom == subCandidates[s].actionIndexFrom) {
-                var potentialSequenceMatchCopy = JSON.parse(JSON.stringify(potentialSequenceMatches[p]));
+                var potentialSequenceMatchCopy = Object.assign({}, potentialSequenceMatches[p]);
                 var newAveragePriority = ((potentialSequenceMatchCopy.averagePriority * potentialSequenceMatchCopy.sequences.length) + subCandidates[s].staticPriority) / (potentialSequenceMatchCopy.sequences.length+1);
                 
                 potentialSequenceMatchCopy.sequences.push(subCandidates[s]);
@@ -269,6 +270,7 @@ function workerWrapper() {
       if ((sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1) > maxLength) maxLength = (sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1);
       if (sequenceSubset[i].staticPriority > minPriority) minPriority = sequenceSubset[i].staticPriority;
       if (sequenceSubset[i].staticPriority < maxPriority) maxPriority = sequenceSubset[i].staticPriority;
+      
       /*
       if (sequenceSubset.length > 6 && sequenceSubset[i].actionIndexFrom > sequenceSubset[5].actionIndexFrom) {
         break;
@@ -366,7 +368,7 @@ function workerWrapper() {
     */
     
     //console.log(minPriority, maxPriority);
-    console.log(potentialSequenceMatches);
+    //console.log(potentialSequenceMatches);
       
     return potentialSequenceMatches[0].sequences;
 
