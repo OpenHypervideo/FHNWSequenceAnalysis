@@ -40,6 +40,17 @@ function workerWrapper() {
               	cleanSequence.sequences.push(prioritizedSequenceData[i].sequences[s]);
             }
           }
+
+          // make sure sequences are sorted correctly
+          cleanSequence.sequences.sort(function(a, b) {
+            if (a.actionIndexFrom < b.actionIndexFrom) {
+              return -1;
+            }
+            if (a.actionIndexFrom > b.actionIndexFrom) {
+              return 1;
+            }
+            return 0;
+          });
         }
 
         cleanData.push(cleanSequence);
@@ -172,7 +183,7 @@ function workerWrapper() {
         minLength = 100,
         maxLength = 1,
         minPriority = 1,
-        maxPriority = 12,
+        maxPriority = 17,
         minSequences = 1,
         maxSequences = 1;
 

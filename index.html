@@ -5,7 +5,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
     <meta http-equiv="Pragma" content="no-cache"/>
     <meta http-equiv="Expires" content="0"/>
-    <title>Action Sequence Detector</title>
+    <title>Sequence Analysis Tool [SAT]</title>
     <!--
 			[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +20,7 @@
   </head>
   <body class="frametrail-body">
     <div class="main">
-      <h2 class="text-center">Action Sequence Detector</h2>
+      <h2 class="text-center">Sequence Analysis Tool [SAT]</h2>
       <div class="fileContainer">
         <div id="fileDropContainer">
           Drop evaluation files containing actions here: (XLSX Format)
@@ -33,12 +33,17 @@
       </div>
       <div class="resultContainer">
         <ul class="nav nav-tabs">
-          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#visualResultContainer">Detected Sequences</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#singleAnalysisResultWrapper">Full Sequence Data</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#totalAnalysisResultWrapper">Summarized Sequence Data</a></li>
           <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#actionDataResultWrapper">Action Data</a></li>
+          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#visualResultContainer">Visualized Sequences</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#singleAnalysisResultWrapper">Detected Sequences</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#totalAnalysisResultWrapper">Summarized Sequences</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#transitionMatrixResultWrapper">Transition Matrices</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#markovChainVizWrapper">Markov Chain Visualizations</a></li>
         </ul>
         <div class="tab-content">
+          <div id="actionDataResultWrapper" class="tab-pane fade">
+            <div id="actionDataResultContainer" class="d-flex row"></div>
+          </div>
           <div id="visualResultContainer" class="tab-pane fade show active"></div>
           <div id="singleAnalysisResultWrapper" class="tab-pane fade">
             <div id="singleAnalysisResultContainer" class="d-flex row row-cols-2"></div>
@@ -46,8 +51,11 @@
           <div id="totalAnalysisResultWrapper" class="tab-pane fade">
             <div id="totalAnalysisResultContainer" class="d-flex row row-cols-2"></div>
           </div>
-          <div id="actionDataResultWrapper" class="tab-pane fade">
-            <div id="actionDataResultContainer" class="d-flex row"></div>
+          <div id="transitionMatrixResultWrapper" class="tab-pane fade">
+            <div id="transitionMatrixResultContainer" class="d-flex row"></div>
+          </div>
+          <div id="markovChainVizWrapper" class="tab-pane fade">
+            <div id="markovChainVizContainer" class="d-flex row"></div>
           </div>
         </div>
       </div>

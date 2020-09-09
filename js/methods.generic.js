@@ -228,7 +228,7 @@ function cleanActionData(originActionArray) {
 	return cleanActionArray;
 }
 
-function renderTable(targetElemSelector, name, tableData, columns, additionalClasses, enableSearch, enableFooter) {
+function renderTable(targetElemSelector, name, tableData, columns, additionalClasses, enableSearch, enableFooter, preventSorting) {
 	var tableID = toCamelCase(name);
 	var classes = (additionalClasses) ? additionalClasses : ''
 	var tableContainer = $('<div class="tableContainer '+ classes +'" data-table-id="'+ tableID +'"></div>');
@@ -260,9 +260,9 @@ function renderTable(targetElemSelector, name, tableData, columns, additionalCla
 				return htmlData;
 			}
 		},
-		sortName: columns[0].field,
+		sortName: (preventSorting) ? false : columns[0].field,
 		cardView: false,
-		locale: 'de-DE',
+		locale: 'en-UK',
 		columns: columns,
 		data: tableData
 	});

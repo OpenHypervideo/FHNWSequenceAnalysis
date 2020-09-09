@@ -8,19 +8,19 @@ function updateDataTables() {
 	var genericSequenceColumnData = [
 		{
 			field: 'sequenceNumber',
-			title: 'Sequenz',
+			title: 'Sequence',
 			sortable: true,
 			searchable: true
 		},
 		{
 			field: 'count',
-			title: 'Anzahl',
+			title: 'Amount',
 			sortable: true,
 			searchable: false
 		},
 		{
 			field: 'percentage',
-			title: 'Prozent',
+			title: 'Percentage',
 			sortable: true,
 			searchable: false
 		}
@@ -54,25 +54,25 @@ function updateDataTables() {
 	var mergedSequenceColumnData = [
 		{
 			field: 'group',
-			title: 'Gruppe',
+			title: 'Group',
 			sortable: true,
 			searchable: false
 		},
 		{
 			field: 'user',
-			title: 'TN',
+			title: 'User',
 			sortable: true,
 			searchable: true
 		},
 		{
 			field: 'scenario',
-			title: 'Lernaufgabe',
+			title: 'Task',
 			sortable: true,
 			searchable: false
 		},
 		{
 			field: 'setting',
-			title: 'Lernsetting',
+			title: 'Setting',
 			sortable: true,
 			searchable: false
 		}
@@ -176,25 +176,25 @@ function updateDataTables() {
 	var genericActionColumnData = [
 		{
 			field: 'actionsUsed',
-			title: 'Verwendete Aktionen',
+			title: 'Used Actions',
 			sortable: true,
 			searchable: false
 		},
 		{
 			field: 'actionsNotUsed',
-			title: 'Nicht verwendete Aktionen',
+			title: 'Actions not used',
 			sortable: true,
 			searchable: false
 		},
 		{
 			field: 'actionsTotal',
-			title: 'Aktionen insgesamt',
+			title: 'TOTAL Actions',
 			sortable: true,
 			searchable: false
 		},
 		{
 			field: 'actionsUsedPercent',
-			title: 'Prozent verwendete Aktionen',
+			title: 'Percentage Used Actions',
 			sortable: true,
 			searchable: false
 		}
@@ -202,7 +202,7 @@ function updateDataTables() {
 	var genericActionTypeColumnData = [
 		{
 			field: 'actionName',
-			title: 'Aktion',
+			title: 'Action',
 			sortable: true,
 			searchable: true,
 			footerFormatter: function(items) {
@@ -211,7 +211,7 @@ function updateDataTables() {
 		},
 		{
 			field: 'countTotal',
-			title: 'Anzahl gesamt',
+			title: 'Total amount',
 			sortable: true,
 			searchable: false,
 			footerFormatter: function(items) {
@@ -224,7 +224,7 @@ function updateDataTables() {
 		},
 		{
 			field: 'countUsed',
-			title: 'Anzahl verwendet',
+			title: 'Amount used',
 			sortable: true,
 			searchable: false,
 			footerFormatter: function(items) {
@@ -237,7 +237,7 @@ function updateDataTables() {
 		},
 		{
 			field: 'percentageUsed',
-			title: 'Prozent verwendet',
+			title: 'Percentage used',
 			sortable: true,
 			searchable: false,
 			footerFormatter: function(items) {
@@ -250,7 +250,7 @@ function updateDataTables() {
 		},
 		{
 			field: 'percentageTotal',
-			title: 'Prozent gesamt',
+			title: 'Percentage total',
 			sortable: true,
 			searchable: false,
 			footerFormatter: function(items) {
@@ -263,12 +263,218 @@ function updateDataTables() {
 		}
 	];
 	renderTable('#actionDataResultContainer', 'TOTAL Actions used', sequenceCountDataAll.actions, genericActionTypeColumnData, 'col-12', true, true);
-	renderTable('#actionDataResultContainer', 'Actions used → Individual | Annotations', sequenceCountDataIA.actions, genericActionTypeColumnData, 'col-12', true, true);
+	renderTable('#actionDataResultContainer', 'Actions used  → Individual | Annotations', sequenceCountDataIA.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used → Individual | Hyperlinks', sequenceCountDataIH.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used → Individual | Control Group', sequenceCountDataIC.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used → Collaborative | Annotations', sequenceCountDataCA.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used → Collaborative | Hyperlinks', sequenceCountDataCH.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used → Collaborative | Control Group', sequenceCountDataCC.actions, genericActionTypeColumnData, 'col-12', true, true);
+
+	var markovSequenceColumnData = [
+		{
+			field: 'sequenceNumber',
+			title: '',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
+		},
+		{
+			field: '1.1',
+			title: '1.1',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '1.2',
+			title: '1.2',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '1.3',
+			title: '1.3',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '1.4',
+			title: '1.4',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2.1',
+			title: '2.1',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2.2',
+			title: '2.2',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2.3',
+			title: '2.3',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.1',
+			title: '3.1',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.2',
+			title: '3.2',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.3',
+			title: '3.3',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.4',
+			title: '3.4',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4.1',
+			title: '4.1',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4.2',
+			title: '4.2',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4.3',
+			title: '4.3',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5.1',
+			title: '5.1',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5.2',
+			title: '5.2',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5.3',
+			title: '5.3',
+			sortable: false,
+			searchable: false
+		}
+	];
+	var markovMainSequenceColumnData = [
+		{
+			field: 'sequenceNumber',
+			title: '',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
+		},
+		{
+			field: '1',
+			title: '1',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2',
+			title: '2',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3',
+			title: '3',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4',
+			title: '4',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5',
+			title: '5',
+			sortable: false,
+			searchable: false
+		}
+	];
+	var markovActionColumnData = [
+		{
+			field: 'actionName',
+			title: '',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
+		},
+		{
+			field: 'VideoPlay',
+			title: 'VideoPlay',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'VideoPause',
+			title: 'VideoPause',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'VideoJumpBackward',
+			title: 'VideoJumpBackward',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'VideoJumpForward',
+			title: 'VideoJumpForward',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'AnnotationAdd',
+			title: 'AnnotationAdd',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'AnnotationChangeText',
+			title: 'AnnotationChangeText',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'AnnotationChangeTime',
+			title: 'AnnotationChangeTime',
+			sortable: false,
+			searchable: false
+		}
+	];
+
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Actions', sequenceCountDataAll.MarkovChainData.actions, markovActionColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Sequences', sequenceCountDataAll.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Main Sequences', sequenceCountDataAll.MarkovChainData.mainSequences, markovMainSequenceColumnData, 'col-12', false, false, true);
 }
 
 function getSequenceCountData(data, setting, scenario) {
@@ -281,7 +487,12 @@ function getSequenceCountData(data, setting, scenario) {
 			'actionsUsed': 0,
 			'actionsUsedPercent': 0,
 			'actionsNotUsed': 0
-		}]
+		}],
+		'MarkovChainData': {
+			'sequences': [],
+			'mainSequences': [],
+			'actions': []
+		}
 	};
 	var countsPerSequence = {
 		"1.1": 0,
@@ -327,7 +538,44 @@ function getSequenceCountData(data, setting, scenario) {
 		'AnnotationChangeText': 0,
 		'AnnotationChangeTime': 0
 	};
-	var totalSequenceCount = 0;
+
+	var markovCountsPerSequence = {
+		"1.1": Object.assign({}, countsPerSequence),
+		"1.2": Object.assign({}, countsPerSequence),
+		"1.3": Object.assign({}, countsPerSequence),
+		"1.4": Object.assign({}, countsPerSequence),
+		"2.1": Object.assign({}, countsPerSequence),
+		"2.2": Object.assign({}, countsPerSequence),
+		"2.3": Object.assign({}, countsPerSequence),
+		"3.1": Object.assign({}, countsPerSequence),
+		"3.2": Object.assign({}, countsPerSequence),
+		"3.3": Object.assign({}, countsPerSequence),
+		"3.4": Object.assign({}, countsPerSequence),
+		"4.1": Object.assign({}, countsPerSequence),
+		"4.2": Object.assign({}, countsPerSequence),
+		"4.3": Object.assign({}, countsPerSequence),
+		"5.1": Object.assign({}, countsPerSequence),
+		"5.2": Object.assign({}, countsPerSequence),
+		"5.3": Object.assign({}, countsPerSequence)
+    };
+    var markovCountsPerMainSequence = {
+		"1": Object.assign({}, countsPerMainSequence),
+		"2": Object.assign({}, countsPerMainSequence),
+		"3": Object.assign({}, countsPerMainSequence),
+		"4": Object.assign({}, countsPerMainSequence),
+		"5": Object.assign({}, countsPerMainSequence)
+    };
+    var markovCountsPerAction = {
+		'VideoPlay': Object.assign({}, countsPerAction),
+		'VideoPause': Object.assign({}, countsPerAction),
+		'VideoJumpBackward': Object.assign({}, countsPerAction),
+		'VideoJumpForward': Object.assign({}, countsPerAction),
+		'AnnotationAdd': Object.assign({}, countsPerAction),
+		'AnnotationChangeText': Object.assign({}, countsPerAction),
+		'AnnotationChangeTime': Object.assign({}, countsPerAction)
+    };
+
+   	var totalSequenceCount = 0;
 
 	// iterate files
 	if (Array.isArray(data)) {
@@ -341,11 +589,25 @@ function getSequenceCountData(data, setting, scenario) {
 			// iterate actions
 			for (var ta = 0; ta < data[i].actions.length; ta++) {
 				countsPerAction[data[i].actions[ta].Aktion]++;
+
+				var nextAction = (ta < data[i].actions.length - 1) ? data[i].actions[(ta+1)] : null;
+				if (nextAction) {
+					markovCountsPerAction[data[i].actions[ta].Aktion][nextAction.Aktion]++;
+				}
 			}
 			// iterate sequences
 			for (var s = 0; s < data[i].sequences.length; s++) {
 				var currentSequence = data[i].sequences[s];
 				var currentMainSequenceNumber = currentSequence.sequenceNumber.split('.')[0];
+
+				var nextSequence = (s < data[i].sequences.length - 1) ? data[i].sequences[(s+1)] : null;
+				if (nextSequence) {
+					var nextMainSequenceNumber = nextSequence.sequenceNumber.split('.')[0];
+
+					markovCountsPerSequence[currentSequence.sequenceNumber][nextSequence.sequenceNumber]++;
+					markovCountsPerMainSequence[currentMainSequenceNumber][nextMainSequenceNumber]++;
+				}
+
 				countsPerSequence[currentSequence.sequenceNumber]++;
 				countsPerMainSequence[currentMainSequenceNumber]++;
 				totalSequenceCount++;
@@ -364,10 +626,24 @@ function getSequenceCountData(data, setting, scenario) {
 			// iterate actions
 			for (var ta = 0; ta < data.actions.length; ta++) {
 				countsPerAction[data.actions[ta].Aktion]++;
+
+				var nextAction = (ta < data.actions.length - 1) ? data.actions[(ta+1)] : null;
+				if (nextAction) {
+					markovCountsPerAction[data.actions[ta].Aktion][nextAction.Aktion]++;
+				}
 			}
 			for (var s = 0; s < data.sequences.length; s++) {
 				var currentSequence = data.sequences[s];
 				var currentMainSequenceNumber = currentSequence.sequenceNumber.split('.')[0];
+
+				var nextSequence = (s < data.sequences.length - 1) ? data.sequences[(s+1)] : null;
+				if (nextSequence) {
+					var nextMainSequenceNumber = nextSequence.sequenceNumber.split('.')[0];
+
+					markovCountsPerSequence[currentSequence.sequenceNumber][nextSequence.sequenceNumber]++;
+					markovCountsPerMainSequence[currentMainSequenceNumber][nextMainSequenceNumber]++;
+				}
+
 				countsPerSequence[currentSequence.sequenceNumber]++;
 				countsPerMainSequence[currentMainSequenceNumber]++;
 				totalSequenceCount++;
@@ -420,6 +696,32 @@ function getSequenceCountData(data, setting, scenario) {
 			'percentageUsed': percentageUsed
 		});
 	}
+
+	//iterate markovCountsPerSequence 
+	for (var sequenceNumber in markovCountsPerSequence) {
+		// push to table data
+		var mergedData = markovCountsPerSequence[sequenceNumber];
+		mergedData.sequenceNumber = sequenceNumber;
+		returnData.MarkovChainData.sequences.push(mergedData);
+	}
+
+	//iterate markovCountsPerMainSequence 
+	for (var sequenceNumber in markovCountsPerMainSequence) {
+		// push to table data
+		var mergedData = markovCountsPerMainSequence[sequenceNumber];
+		mergedData.sequenceNumber = sequenceNumber;
+		returnData.MarkovChainData.mainSequences.push(mergedData);
+	}
+
+	//iterate markovCountsPerAction 
+	for (var actionName in markovCountsPerAction) {
+		// push to table data
+		var mergedData = markovCountsPerAction[actionName];
+		mergedData.actionName = actionName;
+		returnData.MarkovChainData.actions.push(mergedData);
+	}
+
+	console.log(returnData);
 
 	return returnData;
 }

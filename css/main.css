@@ -316,3 +316,23 @@ body.result #fileDropContainer {
 .tableContainer h4 {
 	margin-bottom: 0px;
 }
+
+.tableContainer table {
+	overflow: hidden;
+}
+
+.tableContainer table td {
+	position: relative;
+}
+
+#transitionMatrixResultContainer .tableContainer table td:hover::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: -5000px;
+	height: 10000px;
+	width: 100%;
+	z-index: -1;
+	/* keep it below table content */
+	background-color: rgba(0,0,0,.075);
+}
