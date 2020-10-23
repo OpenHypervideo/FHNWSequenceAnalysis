@@ -1,56 +1,27 @@
 // Data Analysis Methods
 
-var dataTableIDList = [];
+var dataTableIDList = [],
+	sequenceCountDataAll,
+	sequenceCountDataIA,
+	sequenceCountDataIH,
+	sequenceCountDataIC,
+	sequenceCountDataCA,
+	sequenceCountDataCH,
+	sequenceCountDataCC;
 
 function updateDataTables() {
 	resetTables(dataTableIDList);
 
-	var genericSequenceColumnData = [
-		{
-			field: 'sequenceNumber',
-			title: 'Sequence',
-			sortable: true,
-			searchable: true
-		},
-		{
-			field: 'count',
-			title: 'Amount',
-			sortable: true,
-			searchable: false
-		},
-		{
-			field: 'percentage',
-			title: 'Percentage',
-			sortable: true,
-			searchable: false
-		}
-	];
-
-	// Render Total Sequence Count Data
-	var sequenceCountDataAll = getSequenceCountData(cleanSequenceData);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences', sequenceCountDataAll.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences', sequenceCountDataAll.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-
-	// Render Total Sequence Count Data per scenario & setting
-	var sequenceCountDataIA = getSequenceCountData(cleanSequenceData, 'individual', 'annotations');
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences → Individual | Annotations', sequenceCountDataIA.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences → Individual | Annotations', sequenceCountDataIA.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	var sequenceCountDataIH = getSequenceCountData(cleanSequenceData, 'individual', 'hyperlinks');
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences → Individual | Hyperlinks', sequenceCountDataIH.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences → Individual | Hyperlinks', sequenceCountDataIH.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	var sequenceCountDataIC = getSequenceCountData(cleanSequenceData, 'individual', 'controlGroup');
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences → Individual | Control Group', sequenceCountDataIC.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences → Individual | Control Group', sequenceCountDataIC.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	var sequenceCountDataCA = getSequenceCountData(cleanSequenceData, 'collaborative', 'annotations');
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences → Collaborative | Annotations', sequenceCountDataCA.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences → Collaborative | Annotations', sequenceCountDataCA.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	var sequenceCountDataCH = getSequenceCountData(cleanSequenceData, 'collaborative', 'hyperlinks');
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences → Collaborative | Hyperlinks', sequenceCountDataCH.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences → Collaborative | Hyperlinks', sequenceCountDataCH.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	var sequenceCountDataCC = getSequenceCountData(cleanSequenceData, 'collaborative', 'controlGroup');
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Sequences → Collaborative | Control Group', sequenceCountDataCC.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#totalAnalysisResultContainer', 'TOTAL Main Sequences → Collaborative | Control Group', sequenceCountDataCC.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-
+	// Get Sequence Count Data (global vars)
+	sequenceCountDataAll = getSequenceCountData(cleanSequenceData);
+	sequenceCountDataIA = getSequenceCountData(cleanSequenceData, 'individual', 'annotations');
+	sequenceCountDataIH = getSequenceCountData(cleanSequenceData, 'individual', 'hyperlinks');
+	sequenceCountDataIC = getSequenceCountData(cleanSequenceData, 'individual', 'controlGroup');
+	sequenceCountDataCA = getSequenceCountData(cleanSequenceData, 'collaborative', 'annotations');
+	sequenceCountDataCH = getSequenceCountData(cleanSequenceData, 'collaborative', 'hyperlinks');
+	sequenceCountDataCC = getSequenceCountData(cleanSequenceData, 'collaborative', 'controlGroup');
+	
+	// Render Sequence Count Data per Sequence
 	var mergedSequenceColumnData = [
 		{
 			field: 'group',
@@ -77,7 +48,6 @@ function updateDataTables() {
 			searchable: false
 		}
 	];
-	// Render Sequence Count Data per Sequence
 	var mergedTableData = [];
 	for (var s = 0; s < cleanSequenceData.length; s++) {
 		var sequenceCountData = getSequenceCountData(cleanSequenceData[s]),
@@ -113,7 +83,6 @@ function updateDataTables() {
 			'setting': (cleanSequenceData[s].setting == 'individual') ? '1' : '2'
 		}
 
-		console.log(sequenceCountData);
 		for (var sc = 0; sc < sequenceCountData.sequences.length; sc++) {
 			var absoluteFieldName = sequenceCountData.sequences[sc].sequenceNumber + '_absolute';
 			if (s === 0) {
@@ -169,99 +138,10 @@ function updateDataTables() {
 	renderTable('#singleAnalysisResultContainer', '', mergedTableData, mergedSequenceColumnData, 'col-12', true, false);
 	/*
 	renderTable('#singleAnalysisResultContainer', cleanSequenceData[s].fileName +' Sequences', sequenceCountData.sequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
-	renderTable('#singleAnalysisResultContainer', cleanSequenceData[s].fileName +' Main Sequences', sequenceCountData.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
+	renderTable('#singleAnalysisResultContainer', cleanSequenceData[s].fileName +' Behaviour Patterns', sequenceCountData.mainSequences, genericSequenceColumnData, 'col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6', true, false);
 	*/
 
 	// Render Action Data
-	var genericActionColumnData = [
-		{
-			field: 'actionsUsed',
-			title: 'Used Actions',
-			sortable: true,
-			searchable: false
-		},
-		{
-			field: 'actionsNotUsed',
-			title: 'Actions not used',
-			sortable: true,
-			searchable: false
-		},
-		{
-			field: 'actionsTotal',
-			title: 'TOTAL Actions',
-			sortable: true,
-			searchable: false
-		},
-		{
-			field: 'actionsUsedPercent',
-			title: 'Percentage Used Actions',
-			sortable: true,
-			searchable: false
-		}
-	];
-	var genericActionTypeColumnData = [
-		{
-			field: 'actionName',
-			title: 'Action',
-			sortable: true,
-			searchable: true,
-			footerFormatter: function(items) {
-				return 'TOTAL';
-			}
-		},
-		{
-			field: 'countTotal',
-			title: 'Total amount',
-			sortable: true,
-			searchable: false,
-			footerFormatter: function(items) {
-				var totalCount = 0;
-				items.forEach(function(item) {
-					totalCount = totalCount + item.countTotal;
-				});
-				return totalCount;
-			}
-		},
-		{
-			field: 'countUsed',
-			title: 'Amount used',
-			sortable: true,
-			searchable: false,
-			footerFormatter: function(items) {
-				var totalCount = 0;
-				items.forEach(function(item) {
-					totalCount = totalCount + item.countUsed;
-				});
-				return totalCount;
-			}
-		},
-		{
-			field: 'percentageUsed',
-			title: 'Percentage used',
-			sortable: true,
-			searchable: false,
-			footerFormatter: function(items) {
-				var totalCount = 0;
-				items.forEach(function(item) {
-					totalCount = totalCount + item.percentageUsed;
-				});
-				return Math.round(totalCount*100)/100;
-			}
-		},
-		{
-			field: 'percentageTotal',
-			title: 'Percentage total',
-			sortable: true,
-			searchable: false,
-			footerFormatter: function(items) {
-				var totalCount = 0;
-				items.forEach(function(item) {
-					totalCount = totalCount + item.percentageTotal;
-				});
-				return Math.round(totalCount*100)/100;
-			}
-		}
-	];
 	renderTable('#actionDataResultContainer', 'TOTAL Actions used', sequenceCountDataAll.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used  → Individual | Annotations', sequenceCountDataIA.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used → Individual | Hyperlinks', sequenceCountDataIH.actions, genericActionTypeColumnData, 'col-12', true, true);
@@ -270,6 +150,12 @@ function updateDataTables() {
 	renderTable('#actionDataResultContainer', 'Actions used → Collaborative | Hyperlinks', sequenceCountDataCH.actions, genericActionTypeColumnData, 'col-12', true, true);
 	renderTable('#actionDataResultContainer', 'Actions used → Collaborative | Control Group', sequenceCountDataCC.actions, genericActionTypeColumnData, 'col-12', true, true);
 
+	// Render Colored Transition Matrices
+	//renderTable('#transitionMatrixColoredResultContainer', 'Transition Matrix → Actions', sequenceCountDataAll.MarkovChainData.actions, coloredMarkovActionColumnData, 'col-12', false, false, true);
+	//renderTable('#transitionMatrixColoredResultContainer', 'Transition Matrix → Behaviour Sequences', sequenceCountDataAll.MarkovChainData.sequences, coloredMarkovSequenceColumnData, 'col-12', false, false, true);
+	//renderTable('#transitionMatrixColoredResultContainer', 'Transition Matrix → Behaviour Patterns', sequenceCountDataAll.MarkovChainData.mainSequences, coloredMarkovMainSequenceColumnData, 'col-12', false, false, true);
+
+	// Render Summarized Transition Matrices
 	var markovSequenceColumnData = [
 		{
 			field: 'sequenceNumber',
@@ -379,7 +265,123 @@ function updateDataTables() {
 			title: '5.3',
 			sortable: false,
 			searchable: false
-		}
+		},
+		{
+			field: 'totalRowCount',
+			title: 'TOTAL (abs)',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
+		},
+		{
+			field: '1.1_rel',
+			title: '1.1_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '1.2_rel',
+			title: '1.2_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '1.3_rel',
+			title: '1.3_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '1.4_rel',
+			title: '1.4_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2.1_rel',
+			title: '2.1_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2.2_rel',
+			title: '2.2_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2.3_rel',
+			title: '2.3_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.1_rel',
+			title: '3.1_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.2_rel',
+			title: '3.2_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.3_rel',
+			title: '3.3_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3.4_rel',
+			title: '3.4_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4.1_rel',
+			title: '4.1_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4.2_rel',
+			title: '4.2_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4.3_rel',
+			title: '4.3_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5.1_rel',
+			title: '5.1_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5.2_rel',
+			title: '5.2_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5.3_rel',
+			title: '5.3_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'totalRowCountRelative',
+			title: 'TOTAL (rel)',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
+		},
 	];
 	var markovMainSequenceColumnData = [
 		{
@@ -418,6 +420,50 @@ function updateDataTables() {
 			title: '5',
 			sortable: false,
 			searchable: false
+		},
+		{
+			field: 'totalRowCount',
+			title: 'TOTAL (abs)',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
+		},
+		{
+			field: '1_rel',
+			title: '1_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '2_rel',
+			title: '2_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '3_rel',
+			title: '3_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '4_rel',
+			title: '4_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: '5_rel',
+			title: '5_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'totalRowCountRelative',
+			title: 'TOTAL (rel)',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
 		}
 	];
 	var markovActionColumnData = [
@@ -469,15 +515,77 @@ function updateDataTables() {
 			title: 'AnnotationChangeTime',
 			sortable: false,
 			searchable: false
+		},
+		{
+			field: 'totalRowCount',
+			title: 'TOTAL (abs)',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
+		},
+		{
+			field: 'VideoPlay_rel',
+			title: 'VideoPlay_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'VideoPause_rel',
+			title: 'VideoPause_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'VideoJumpBackward_rel',
+			title: 'VideoJumpBackward_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'VideoJumpForward_rel',
+			title: 'VideoJumpForward_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'AnnotationAdd_rel',
+			title: 'AnnotationAdd_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'AnnotationChangeText_rel',
+			title: 'AnnotationChangeText_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'AnnotationChangeTime_rel',
+			title: 'AnnotationChangeTime_rel',
+			sortable: false,
+			searchable: false
+		},
+		{
+			field: 'totalRowCountRelative',
+			title: 'TOTAL (rel)',
+			sortable: false,
+			searchable: false,
+			class: 'font-weight-bold'
 		}
 	];
 
 	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Actions', sequenceCountDataAll.MarkovChainData.actions, markovActionColumnData, 'col-12', false, false, true);
-	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Sequences', sequenceCountDataAll.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
-	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Main Sequences', sequenceCountDataAll.MarkovChainData.mainSequences, markovMainSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Sequences', sequenceCountDataAll.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Patterns', sequenceCountDataAll.MarkovChainData.mainSequences, markovMainSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Sequences: Individual | Annotations', sequenceCountDataIA.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Sequences: Individual | Hyperlinks', sequenceCountDataIH.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Sequences: Individual | Control Group', sequenceCountDataIC.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Sequences: Collaborative | Annotations', sequenceCountDataCA.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Sequences: Collaborative | Hyperlinks', sequenceCountDataCH.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
+	renderTable('#transitionMatrixResultContainer', 'Transition Matrix → Behaviour Sequences: Collaborative | Control Group', sequenceCountDataCC.MarkovChainData.sequences, markovSequenceColumnData, 'col-12', false, false, true);
 }
 
-function getSequenceCountData(data, setting, scenario) {
+function getSequenceCountData(data, setting, scenario, fileName) {
 	var returnData = {
 		'sequences': [],
 		'mainSequences': [],
@@ -582,7 +690,7 @@ function getSequenceCountData(data, setting, scenario) {
 		for (var i = 0; i < data.length; i++) {
 			//console.log(data[i].fileName);
 			
-			if ((setting && setting != data[i].setting) || (scenario && scenario != data[i].scenario)) {
+			if ((setting && setting != data[i].setting) || (scenario && scenario != data[i].scenario) || (fileName && fileName != data[i].fileName)) {
 				continue;
 			}
 			returnData.statistics[0].actionsTotal += data[i].actions.length;
@@ -619,7 +727,7 @@ function getSequenceCountData(data, setting, scenario) {
 		}
 	} else {
 		
-		if ((setting && setting != data[i].setting) || (scenario && scenario != data[i].scenario)) {
+		if ((setting && setting != data[i].setting) || (scenario && scenario != data[i].scenario) || (fileName && fileName != data[i].fileName)) {
 			// do nothing
 		} else {
 			returnData.statistics[0].actionsTotal += data.actions.length;
@@ -658,7 +766,7 @@ function getSequenceCountData(data, setting, scenario) {
 	returnData.statistics[0].actionsNotUsed = returnData.statistics[0].actionsTotal - returnData.statistics[0].actionsUsed;
 
 	var usedPercentage = 100*(returnData.statistics[0].actionsUsed/returnData.statistics[0].actionsTotal)
-	returnData.statistics[0].actionsUsedPercent = Math.round(usedPercentage*100)/100;
+	returnData.statistics[0].actionsUsedPercent = Math.round(usedPercentage*1000)/1000;
 	
 
 	//iterate countsPerSequence 
@@ -667,8 +775,9 @@ function getSequenceCountData(data, setting, scenario) {
 		var percentage = (totalSequenceCount == 0) ? 0 : 100*(countsPerSequence[sequenceNumber]/totalSequenceCount);
 		returnData.sequences.push({
 			'sequenceNumber': sequenceNumber,
+			'sequenceLabel': getSequenceLabel(sequenceNumber),
 			'count': countsPerSequence[sequenceNumber],
-			'percentage': Math.round(percentage*100)/100
+			'percentage': Math.round(percentage*1000)/1000
 		});
 	}
 
@@ -678,8 +787,9 @@ function getSequenceCountData(data, setting, scenario) {
 		var percentage = (totalSequenceCount == 0) ? 0 : 100*(countsPerMainSequence[sequenceNumber]/totalSequenceCount);
 		returnData.mainSequences.push({
 			'sequenceNumber': sequenceNumber,
+			'sequenceLabel': getSequenceLabel(sequenceNumber),
 			'count': countsPerMainSequence[sequenceNumber],
-			'percentage': Math.round(percentage*100)/100
+			'percentage': Math.round(percentage*1000)/1000
 		});
 	}
 
@@ -701,7 +811,17 @@ function getSequenceCountData(data, setting, scenario) {
 	for (var sequenceNumber in markovCountsPerSequence) {
 		// push to table data
 		var mergedData = markovCountsPerSequence[sequenceNumber];
+		var totalCount = 0;
+		for (var sequenceCountNumber in mergedData) {
+			totalCount += mergedData[sequenceCountNumber];
+		}
+		for (var sequenceCountNumber in mergedData) {
+			mergedData[sequenceCountNumber+'_rel'] = (totalCount == 0) ? 0 : Math.round((mergedData[sequenceCountNumber] / totalCount)*1000)/1000;
+		}
+		mergedData.totalRowCount = totalCount;
+		mergedData.totalRowCountRelative = (totalCount == 0) ? 0 : 1;
 		mergedData.sequenceNumber = sequenceNumber;
+		mergedData.sequenceLabel = getSequenceLabel(sequenceNumber);
 		returnData.MarkovChainData.sequences.push(mergedData);
 	}
 
@@ -709,7 +829,17 @@ function getSequenceCountData(data, setting, scenario) {
 	for (var sequenceNumber in markovCountsPerMainSequence) {
 		// push to table data
 		var mergedData = markovCountsPerMainSequence[sequenceNumber];
+		var totalCount = 0;
+		for (var sequenceCountNumber in mergedData) {
+			totalCount += mergedData[sequenceCountNumber];
+		}
+		for (var sequenceCountNumber in mergedData) {
+			mergedData[sequenceCountNumber+'_rel'] = (totalCount == 0) ? 0 : Math.round((mergedData[sequenceCountNumber] / totalCount)*1000)/1000;
+		}
+		mergedData.totalRowCount = totalCount;
+		mergedData.totalRowCountRelative = (totalCount == 0) ? 0 : 1;
 		mergedData.sequenceNumber = sequenceNumber;
+		mergedData.sequenceLabel = getSequenceLabel(sequenceNumber);
 		returnData.MarkovChainData.mainSequences.push(mergedData);
 	}
 
@@ -717,11 +847,20 @@ function getSequenceCountData(data, setting, scenario) {
 	for (var actionName in markovCountsPerAction) {
 		// push to table data
 		var mergedData = markovCountsPerAction[actionName];
+		var totalCount = 0;
+		for (var actionNameCount in mergedData) {
+			totalCount += mergedData[actionNameCount];
+		}
+		for (var actionNameCount in mergedData) {
+			mergedData[actionNameCount+'_rel'] = (totalCount == 0) ? 0 : Math.round((mergedData[actionNameCount] / totalCount)*1000)/1000;
+		}
+		mergedData.totalRowCount = totalCount;
+		mergedData.totalRowCountRelative = (totalCount == 0) ? 0 : 1;
 		mergedData.actionName = actionName;
 		returnData.MarkovChainData.actions.push(mergedData);
 	}
 
-	console.log(returnData);
+	//console.log(returnData);
 
 	return returnData;
 }

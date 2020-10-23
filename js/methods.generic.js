@@ -139,7 +139,7 @@ function updateVisualResult(data) {
 	$('#visualResultContainer').empty();
 
 	for (var e = 0; e < data.length; e++) {
-		var evalTitle = $('<h4 class="evalTitle">'+ data[e].fileName +'</h4>');
+		var evalTitle = $('<div class="evalTitle"><span class="far fa-file-alt"></span>'+ data[e].fileName +'</div>');
 		var evalBody = $('<div class="evalBody"></div>');
 		var detectedSequences = $('<ul class="detectedSequences"></ul>');
 		var evalItem = $('<ul class="actionList"></ul>');
@@ -167,6 +167,22 @@ function updateVisualResult(data) {
 		$('#visualResultContainer').append(evalTitle, evalBody);
 		detectedSequences.CollisionDetection({spacing:0, includeVerticalMargins:true})
 	}
+}
+
+function updateSelectMenus(data) {
+	// Reset selected option
+	$('.selectMenuContainer select.selectDataType').val('none');
+	$('.selectMenuContainer select.selectDataSubset').val('All');
+
+	var selectMenus = $('.selectMenuContainer select.selectDataSubset');
+	selectMenus.each(function() {
+		$(this).find('option[value^="user_"]').remove();
+		for (var i = 0; i < data.length; i++) {
+			var shortID = data[i].fileName.split('_')[0];
+			$(this).append('<option value="file_'+ data[i].fileName +'">User '+ shortID +'</option>');
+		}
+
+	});
 }
 
 function getSheetData(sheetID, callback) {
@@ -240,7 +256,7 @@ function renderTable(targetElemSelector, name, tableData, columns, additionalCla
 	dataTableIDList.push(tableID);
 
 	tableElem.bootstrapTable({
-		showToggle: true,
+		showToggle: false,
 		showColumns: true,
 		multiToggleDefaults: [],
 		search: enableSearch,
@@ -285,6 +301,57 @@ function getTodayString() {
 		todayString = year +''+ month +''+ day +'-'+ hours +''+ minutes;
 
 	return todayString;
+}
+
+function getSequenceLabel(sequenceNumberInput) {
+	for (var i = 0; i < sequenceDefinitions.length; i++) {
+		if (sequenceDefinitions[i].sequenceNumber == sequenceNumberInput) {
+			return sequenceDefinitions[i].sequenceLabel;
+		}
+	}
+}
+
+function getColorForSequenceNumber(sequenceNumberInput) {
+	//console.log(sequenceNumberInput);
+	sequenceNumberInput = +sequenceNumberInput;
+	for (var i = 0; i < sequenceDefinitions.length; i++) {
+		if (sequenceDefinitions[i].sequenceNumber == sequenceNumberInput) {
+			return sequenceDefinitions[i].sequenceColor;
+		}
+	}
+	return '#AFAFAF';
+}
+
+function getCellColor(value, row, index) {
+	var thisColorIndex = Math.round(value * 10),
+		thisColor = (thisColorIndex == 0) ? monochromaticColorPalette[0] : monochromaticColorPalette[thisColorIndex-1];
+	return {
+		css: {
+			'background-color': '#'+ thisColor,
+			'background-clip': 'padding-box'
+		}
+	}
+}
+
+function getCellColorPercent(value, row, index) {
+	var thisColorIndex = Math.round(value / 10),
+		thisColor = (thisColorIndex == 0) ? monochromaticColorPalette[0] : monochromaticColorPalette[thisColorIndex-1];
+	return {
+		css: {
+			'background-color': '#'+ thisColor,
+			'background-clip': 'padding-box'
+		}
+	}
+}
+
+function getCellColorBySequenceNumber(value, row, index) {
+	var thisColor = getColorForSequenceNumber(value);
+	return {
+		css: {
+			'background-color': thisColor,
+			'background-clip': 'padding-box'
+		}
+	}
 }
 
 function toCamelCase(str) {
@@ -333,6 +400,28 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getInteractiveMarkovChainData(inputData) {
+	var outputData = {
+		labels: [],
+		data: []
+	};
+
+	for (var i = 0; i < inputData.length; i++) {
+		var rowData = [];
+		for (var label in inputData[i]) {
+			if (label.indexOf('_rel') != -1) {
+				if (i == 0) {
+					var thisLabel = label.split('_rel')[0];
+					outputData.labels.push(thisLabel);
+				}
+				rowData.push(inputData[i][label]);
+			}
+		}
+		outputData.data.push(rowData);
+	}
+	return outputData;
+}
+
 function showWorking(message) {
 	if (message) {
 		$('.workingMessage').html(message);
@@ -345,7 +434,19 @@ function hideWorking() {
 		$('.workingIndicator').fadeOut(200, function() {
 			$('.workingMessage').html('');
 		});
-	}, 2000);
+	}, 1000);
+}
+
+function toggleFullscreen() {
+	let elem = document.documentElement;
+
+	if (!document.fullscreenElement) {
+		elem.requestFullscreen().catch(err => {
+			//alert("Error attempting to enable full-screen mode");
+		});
+	} else {
+		document.exitFullscreen();
+	}
 }
 
 /*

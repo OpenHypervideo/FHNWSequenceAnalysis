@@ -6,8 +6,9 @@ analysisTask.addListener('returnResult', function (result, cleanResult) {
   cleanSequenceData = cleanResult;
 
   $('body').addClass('result');
-  updateFileList(sequenceData);
+  //updateFileList(sequenceData);
   updateVisualResult(sequenceData);
+  updateSelectMenus(sequenceData);
   updateDataTables();
   hideWorking();
 
