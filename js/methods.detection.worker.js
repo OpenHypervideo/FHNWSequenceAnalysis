@@ -161,15 +161,13 @@ function workerWrapper() {
 
     var sequenceGroups = getSequenceGroups(sortedSequences);
     
-    //prioritizedSequences = detectPrioritizedSequences(sequenceGroups[5]);
-    
+    //prioritizedSequences = detectPrioritizedSequences(sequenceGroups[0]);
     for (var sg = 0; sg < sequenceGroups.length; sg++) {
       var prioritizedSequencesInGroup = detectPrioritizedSequences(sequenceGroups[sg]);
       for (var ps = 0; ps < prioritizedSequencesInGroup.length; ps++) {
         prioritizedSequences.push(prioritizedSequencesInGroup[ps]);
       }
     }
-    
     
     return prioritizedSequences;
 
@@ -200,7 +198,7 @@ function workerWrapper() {
             subCandidates.push(sequenceSubset[n]);
           }
         }
-              
+        
         for (var s = 0; s < subCandidates.length; s++) {
           
           var potentialPairCandidates = [];
@@ -210,10 +208,11 @@ function workerWrapper() {
 
           potentialPairCandidates.push(sequenceSubset[i]);
           accumulatedPairLength += (sequenceSubset[i].actionIndexTo - sequenceSubset[i].actionIndexFrom + 1);
-
+          
           potentialPairCandidates.push(subCandidates[s]);
           accumulatedPairLength += (subCandidates[s].actionIndexTo - subCandidates[s].actionIndexFrom + 1); 
           accumulatedPairGaps += subCandidates[s].actionIndexFrom - sequenceSubset[i].actionIndexTo - 1;
+          
 
           potentialSequenceMatches.push({
             'averagePriority': (sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2,
@@ -228,11 +227,14 @@ function workerWrapper() {
           if ((sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2 < maxPriority) maxPriority = (sequenceSubset[i].staticPriority + subCandidates[s].staticPriority) / 2;
           if (potentialPairCandidates.length > maxSequences) maxSequences = potentialPairCandidates.length;
 
+          var fixedLength = potentialSequenceMatches.length;
           for (var p = 0; p < potentialSequenceMatches.length; p++) {
             var lastSequence = potentialSequenceMatches[p].sequences[potentialSequenceMatches[p].sequences.length -1];
             
             if (subCandidates[s].actionIndexFrom > lastSequence.actionIndexTo) {
+              
               if (nextCandidate && nextCandidate.actionIndexFrom == subCandidates[s].actionIndexFrom) {
+                /*
                 var potentialSequenceMatchCopy = Object.assign({}, potentialSequenceMatches[p]);
                 var newAveragePriority = ((potentialSequenceMatchCopy.averagePriority * potentialSequenceMatchCopy.sequences.length) + subCandidates[s].staticPriority) / (potentialSequenceMatchCopy.sequences.length+1);
                 
@@ -241,12 +243,15 @@ function workerWrapper() {
                 potentialSequenceMatchCopy.accumulatedLength += (subCandidates[s].actionIndexTo - subCandidates[s].actionIndexFrom + 1);
                 potentialSequenceMatchCopy.accumulatedGaps += subCandidates[s].actionIndexFrom - lastSequence.actionIndexTo - 1;
                 potentialSequenceMatches.push(potentialSequenceMatchCopy);
+
                 if (potentialSequenceMatchCopy.accumulatedLength < minLength) minLength = potentialSequenceMatchCopy.accumulatedLength;
                 if (potentialSequenceMatchCopy.accumulatedLength > maxLength) maxLength = potentialSequenceMatchCopy.accumulatedLength;
                 if (potentialSequenceMatchCopy.averagePriority > minPriority) minPriority = potentialSequenceMatchCopy.averagePriority;
                 if (potentialSequenceMatchCopy.averagePriority < maxPriority) maxPriority = potentialSequenceMatchCopy.averagePriority;
                 if (potentialSequenceMatchCopy.sequences.length > maxSequences) maxSequences = potentialSequenceMatchCopy.sequences.length;
+                */
               } else {
+                
                 var newAveragePriority = ((potentialSequenceMatches[p].averagePriority * potentialSequenceMatches[p].sequences.length) + subCandidates[s].staticPriority) / (potentialSequenceMatches[p].sequences.length+1);
                 
                 potentialSequenceMatches[p].sequences.push(subCandidates[s]);
@@ -336,7 +341,7 @@ function workerWrapper() {
         return (a_rating < b_rating) ? 1 : -1;
       }
     });
-    
+
     /*
     // sort candidate matches by length and priority
     potentialSequenceMatches.sort(function (a, b) {
@@ -357,6 +362,7 @@ function workerWrapper() {
       }
     });
     */
+    
     /*
     // sort candidate matches by priority and length
     potentialSequenceMatches.sort(function (a, b) {
@@ -378,7 +384,7 @@ function workerWrapper() {
     });
     */
     
-    //console.log(minPriority, maxPriority);
+    //console.log(minPriority, maxPriority, maxLength);
     //console.log(potentialSequenceMatches);
       
     return potentialSequenceMatches[0].sequences;
