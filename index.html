@@ -6,21 +6,20 @@
     <meta http-equiv="Pragma" content="no-cache"/>
     <meta http-equiv="Expires" content="0"/>
     <title>Sequence Analysis Tool [SAT]</title>
-    <!--
-			[if lt IE 9]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]
-		-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/libs/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/libs/bootstrap-table.min.css"
     />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
-
   </head>
   <body class="frametrail-body">
     <div class="main">
-      <h2 class="text-center">Sequence Analysis Tool [SAT]</h2>
+      <div id="appTitle" class="d-none d-lg-block">Sequence Analysis Tool [SAT]</div>
+      <div id="optionsContainer">
+        <button class="btn btn-sm" id="newAnalysisButton" data-toggle="tooltip" title="Clear all data and start new analysis"><span class="fa fa-redo" style="margin-right: 10px;"></span>New Analysis</button>
+        <button class="btn btn-sm" id="aboutButton" data-toggle="modal" data-target="#aboutModal">About</button>
+        <button class="btn btn-sm" id="fullscreenButton" data-toggle="tooltip" title="Fullscreen"><span class="fa fa-expand"></span><span class="fa fa-times"></span></button>
+      </div>
       <div class="fileContainer">
         <div id="fileDropContainer">
           Drop evaluation files containing actions here: (XLSX Format)
@@ -33,29 +32,212 @@
       </div>
       <div class="resultContainer">
         <ul class="nav nav-tabs">
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#actionDataResultWrapper">Action Data</a></li>
-          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#visualResultContainer">Visualized Sequences</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#singleAnalysisResultWrapper">Detected Sequences</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#totalAnalysisResultWrapper">Summarized Sequences</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#transitionMatrixResultWrapper">Transition Matrices</a></li>
-          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#markovChainVizWrapper">Markov Chain Visualizations</a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#actionsWrapper"><span class="fa fa-hand-pointer"></span><span class="d-none d-sm-inline">Actions</span></a></li>
+          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#sequencesWrapper"><span class="fa fa-stream"></span><span class="d-none d-sm-inline">Sequences</span></a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#transitionsWrapper"><span class="fa fa-code-branch"></span><span class="d-none d-sm-inline">Transitions</span></a></li>
         </ul>
-        <div class="tab-content">
-          <div id="actionDataResultWrapper" class="tab-pane fade">
-            <div id="actionDataResultContainer" class="d-flex row"></div>
+        <div class="tab-content pt-2">
+          <div id="actionsWrapper" class="tab-pane fade">
+            <div id="actionDataResultContainer" class="d-flex row" style="background: #fff;"></div>
           </div>
-          <div id="visualResultContainer" class="tab-pane fade show active"></div>
-          <div id="singleAnalysisResultWrapper" class="tab-pane fade">
-            <div id="singleAnalysisResultContainer" class="d-flex row row-cols-2"></div>
+          <div id="sequencesWrapper" class="tab-pane fade show active">
+            <ul class="nav nav-tabs">
+              <li class="nav-item" data-toggle="tooltip" title="Visualization"><a class="nav-link active" data-toggle="tab" href="#visualResultContainer"><span class="fa fa-stream"></span></a></li>
+              <li class="nav-item" data-toggle="tooltip" title="Data"><a class="nav-link" data-toggle="tab" href="#singleAnalysisResultWrapper"><span class="fa fa-table"></span></a></li>
+              <li class="nav-item" data-toggle="tooltip" title="Compare Data"><a class="nav-link" data-toggle="tab" href="#totalAnalysisResultWrapper"><span class="fa fa-clone"></span></a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="visualResultContainer" class="tab-pane fade show active"></div>
+              <div id="singleAnalysisResultWrapper" class="tab-pane fade">
+                <div id="singleAnalysisResultContainer" class="d-flex row row-cols-2"></div>
+              </div>
+              <div id="totalAnalysisResultWrapper" class="tab-pane fade">
+                <div id="totalAnalysisResultContainer" class="d-flex row row-cols-2">
+                  <div class="col-12 col-md-6 mt-4">
+                    <div class="row selectMenuContainer mb-2" data-target="totalSequencesTableLeft">
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataType">
+                          <option disabled class="disabled" selected value="none">Choose Data Source</option>
+                          <option value="mainSequences">Behaviour Patterns</option>
+                          <option value="sequences">Behaviour Sequences</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataSubset">
+                          <option value="All" selected>All</option>
+                          <option disabled class="disabled">──────────</option>
+                          <option value="IA">Individual | Annotations</option>
+                          <option value="IH">Individual | Hyperlinks</option>
+                          <option value="IC">Individual | Control Group</option>
+                          <option value="CA">Collaborative | Annotations</option>
+                          <option value="CH">Collaborative | Hyperlinks</option>
+                          <option value="CC">Collaborative | Control Group</option>
+                          <option disabled class="disabled">──────────</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="totalSequencesTableLeft" class="selectResultTable">
+                      <div class="text-center mt-4 mb-4">↑ Select Data ↑</div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mt-4">
+                    <div class="row selectMenuContainer mb-2" data-target="totalSequencesTableRight">
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataType">
+                          <option disabled class="disabled" selected value="none">Choose Data Source</option>
+                          <option value="mainSequences">Behaviour Patterns</option>
+                          <option value="sequences">Behaviour Sequences</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataSubset">
+                          <option value="All" selected>All</option>
+                          <option disabled class="disabled">──────────</option>
+                          <option value="IA">Individual | Annotations</option>
+                          <option value="IH">Individual | Hyperlinks</option>
+                          <option value="IC">Individual | Control Group</option>
+                          <option value="CA">Collaborative | Annotations</option>
+                          <option value="CH">Collaborative | Hyperlinks</option>
+                          <option value="CC">Collaborative | Control Group</option>
+                          <option disabled class="disabled">──────────</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="totalSequencesTableRight" class="selectResultTable">
+                      <div class="text-center mt-4 mb-4">↑ Select Data ↑</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div id="totalAnalysisResultWrapper" class="tab-pane fade">
-            <div id="totalAnalysisResultContainer" class="d-flex row row-cols-2"></div>
-          </div>
-          <div id="transitionMatrixResultWrapper" class="tab-pane fade">
-            <div id="transitionMatrixResultContainer" class="d-flex row"></div>
-          </div>
-          <div id="markovChainVizWrapper" class="tab-pane fade">
-            <div id="markovChainVizContainer" class="d-flex row"></div>
+          <div id="transitionsWrapper" class="tab-pane fade">
+            <ul class="nav nav-tabs">
+              <li class="nav-item" data-toggle="tooltip" title="Visualization"><a class="nav-link active" data-toggle="tab" href="#markovChainVizWrapper"><span class="fa fa-code-branch"></span></a></li>
+              <li class="nav-item" data-toggle="tooltip" title="Data"><a class="nav-link" data-toggle="tab" href="#transitionMatrixResultWrapper"><span class="fa fa-table"></span></a></li>
+              <li class="nav-item" data-toggle="tooltip" title="Compare Data"><a class="nav-link" data-toggle="tab" href="#transitionMatrixColoredResultWrapper"><span class="fa fa-clone"></span></a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="markovChainVizWrapper" class="tab-pane fade show active">
+                <div id="markovChainVizContainer" class="d-flex row">
+                  <div class="col-12 col-md-6 mt-4">
+                    <div class="row selectMenuContainer mb-2" data-target="markovChainVisualizationLeft">
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataType">
+                          <option disabled class="disabled" selected value="none">Choose Data Source</option>
+                          <option value="actions">Actions</option>
+                          <option value="mainSequences">Behaviour Patterns</option>
+                          <option value="sequences">Behaviour Sequences</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataSubset">
+                          <option value="All" selected>All</option>
+                          <option disabled class="disabled">──────────</option>
+                          <option value="IA">Individual | Annotations</option>
+                          <option value="IH">Individual | Hyperlinks</option>
+                          <option value="IC">Individual | Control Group</option>
+                          <option value="CA">Collaborative | Annotations</option>
+                          <option value="CH">Collaborative | Hyperlinks</option>
+                          <option value="CC">Collaborative | Control Group</option>
+                          <option disabled class="disabled">──────────</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="markovChainVisualizationLeft" class="markovChainVisualization" data-simulationCheckbox="false" data-valuesCheckbox="false"></div>
+                  </div>
+                  <div class="col-12 col-md-6 mt-4">
+                    <div class="row selectMenuContainer mb-2" data-target="markovChainVisualizationRight">
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataType">
+                          <option disabled class="disabled" selected value="none">Choose Data Source</option>
+                          <option value="actions">Actions</option>
+                          <option value="mainSequences">Behaviour Patterns</option>
+                          <option value="sequences">Behaviour Sequences</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataSubset">
+                          <option value="All" selected>All</option>
+                          <option disabled class="disabled">──────────</option>
+                          <option value="IA">Individual | Annotations</option>
+                          <option value="IH">Individual | Hyperlinks</option>
+                          <option value="IC">Individual | Control Group</option>
+                          <option value="CA">Collaborative | Annotations</option>
+                          <option value="CH">Collaborative | Hyperlinks</option>
+                          <option value="CC">Collaborative | Control Group</option>
+                          <option disabled class="disabled">──────────</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="markovChainVisualizationRight" class="markovChainVisualization" data-simulationCheckbox="false" data-valuesCheckbox="false"></div>
+                  </div>
+                </div>
+              </div>
+              <div id="transitionMatrixResultWrapper" class="tab-pane fade">
+                <div id="transitionMatrixResultContainer" class="d-flex row"></div>
+              </div>
+              <div id="transitionMatrixColoredResultWrapper" class="tab-pane fade">
+                <div id="transitionMatrixColoredResultContainer" class="d-flex row">
+                  <div class="col-12 col-md-6 mt-4">
+                    <div class="row selectMenuContainer mb-2" data-target="transitionMatrixTableLeft">
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataType">
+                          <option disabled class="disabled" selected value="none">Choose Data Source</option>
+                          <option value="actions">Actions</option>
+                          <option value="mainSequences">Behaviour Patterns</option>
+                          <option value="sequences">Behaviour Sequences</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataSubset">
+                          <option value="All" selected>All</option>
+                          <option disabled class="disabled">──────────</option>
+                          <option value="IA">Individual | Annotations</option>
+                          <option value="IH">Individual | Hyperlinks</option>
+                          <option value="IC">Individual | Control Group</option>
+                          <option value="CA">Collaborative | Annotations</option>
+                          <option value="CH">Collaborative | Hyperlinks</option>
+                          <option value="CC">Collaborative | Control Group</option>
+                          <option disabled class="disabled">──────────</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="transitionMatrixTableLeft" class="selectResultTable">
+                      <div class="text-center mt-4 mb-4">↑ Select Data ↑</div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 mt-4">
+                    <div class="row selectMenuContainer mb-2" data-target="transitionMatrixTableRight">
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataType">
+                          <option disabled class="disabled" selected value="none">Choose Data Source</option>
+                          <option value="actions">Actions</option>
+                          <option value="mainSequences">Behaviour Patterns</option>
+                          <option value="sequences">Behaviour Sequences</option>
+                        </select>
+                      </div>
+                      <div class="col">
+                        <select class="custom-select custom-select-sm selectDataSubset">
+                          <option value="All" selected>All</option>
+                          <option disabled class="disabled">──────────</option>
+                          <option value="IA">Individual | Annotations</option>
+                          <option value="IH">Individual | Hyperlinks</option>
+                          <option value="IC">Individual | Control Group</option>
+                          <option value="CA">Collaborative | Annotations</option>
+                          <option value="CH">Collaborative | Hyperlinks</option>
+                          <option value="CC">Collaborative | Control Group</option>
+                          <option disabled class="disabled">──────────</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="transitionMatrixTableRight" class="selectResultTable">
+                      <div class="text-center mt-4 mb-4">↑ Select Data ↑</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -65,7 +247,42 @@
       <div class="workingSpinner"></div>
       <div class="workingMessage"></div>
     </div>
-
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="aboutModalLabel">About</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>Lorem Ipsum Dolor Sit Amet</h4>
+            <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+            <h4>Header Level 4</h4>
+            <ol>
+               <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+               <li>Aliquam tincidunt mauris eu risus.</li>
+            </ol>
+            <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+            <h4>Header Level 4</h4>
+            <ul>
+               <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+               <li>Aliquam tincidunt mauris eu risus.</li>
+            </ul>
+            <pre><code>
+            #header h1 a {
+              display: block;
+              width: 300px;
+              height: 80px;
+            }
+            </code></pre>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript" src="js/libs/jquery-3.5.0.min.js"></script>
     <script type="text/javascript" src="js/libs/popper.min.js"></script>
     <script type="text/javascript" src="js/libs/bootstrap.min.js"></script>
@@ -77,8 +294,11 @@
     <script type="text/javascript" src="js/libs/shim.min.js"></script>
     <script type="text/javascript" src="js/libs/xlsx.full.min.js"></script>
     <script type="text/javascript" src="js/libs/jquery.collisiondetection.js"></script>
+    <script type="text/javascript" src="js/libs/d3.v3.js"></script>
     <script type="text/javascript" src="js/methods.detection.worker.js"></script>
     <script type="text/javascript" src="js/methods.generic.js"></script>
+    <script type="text/javascript" src="js/definitions.main.js"></script>
+    <script type="text/javascript" src="js/definitions.tables.js"></script>
     <script type="text/javascript" src="js/methods.detection.js"></script>
     <script type="text/javascript" src="js/methods.analysis.js"></script>
     <script type="text/javascript" src="js/methods.visualization.js"></script>
