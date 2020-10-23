@@ -20,7 +20,7 @@ body {
 }
 
 body.frametrail-body {
-	background: #fff;
+	background: #4D5567;
 	font-family: TitilliumWeb,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 14px;
 	font-weight: 400;
@@ -55,6 +55,10 @@ button:hover, button:active, button:focus {
 	font-family: 'Glyphicons Halflings';
 }
 
+.fa-file-alt {
+	margin-right: 6px;
+}
+
 .message {
 	height: auto;
 	line-height: 20px;
@@ -68,6 +72,10 @@ button:hover, button:active, button:focus {
 	display: none;
 }
 
+.tab-pane .message {
+	margin-top: 10px;
+}
+
 .message.active {
 	display: block;
 }
@@ -78,14 +86,18 @@ button:hover, button:active, button:focus {
 	color: #739600;
 }
 
+.modal-dialog button:hover {
+	border: none;
+}
+
 .workingIndicator {
     position: fixed;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background: rgba(255,255,255,.9);
-    pointer-events: none;
+    background: rgba(33,41,53,.9);
+    z-index: 10000000000;
     display: none;
 }
 
@@ -96,6 +108,7 @@ button:hover, button:active, button:focus {
 	width: 80%;
 	text-align: center;
 	font-size: 20px;
+	color: #fff;
 }
 
 .workingSpinner {
@@ -108,12 +121,12 @@ button:hover, button:active, button:focus {
     margin-left: -30px;
     border-radius: 50%;
     transform-origin: center;
-    background: var(--primary-fg-color);
-    background: -moz-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
-    background: -webkit-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
-    background: -o-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
-    background: -ms-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
-    background: linear-gradient(to right, var(--primary-fg-color) 10%, transparent 42%);
+    background: var(--primary-bg-color);
+    background: -moz-linear-gradient(left, var(--primary-bg-color) 10%, transparent 42%);
+    background: -webkit-linear-gradient(left, var(--primary-bg-color) 10%, transparent 42%);
+    background: -o-linear-gradient(left, var(--primary-bg-color) 10%, transparent 42%);
+    background: -ms-linear-gradient(left, var(--primary-bg-color) 10%, transparent 42%);
+    background: linear-gradient(to right, var(--primary-bg-color) 10%, transparent 42%);
     -webkit-animation: loading 1.4s infinite linear;
     animation: loading 1s infinite linear;
     -webkit-transform: translateZ(0);
@@ -126,7 +139,7 @@ button:hover, button:active, button:focus {
 .workingSpinner:before {
     width: 50%;
     height: 50%;
-    background: var(--primary-fg-color);
+    background: var(--primary-bg-color);
     border-radius: 100% 0 0 0;
     position: absolute;
     top: 0;
@@ -135,7 +148,7 @@ button:hover, button:active, button:focus {
 }
 
 .workingSpinner:after {
-    background: var(--primary-bg-color);
+    background: var(--primary-fg-color);
     width: 90%;
     height: 90%;
     border-radius: 50%;
@@ -170,25 +183,93 @@ button:hover, button:active, button:focus {
     }
 }
 
+#appTitle {
+	color: #f2f3f6;
+	font-size: 16px;
+	position: absolute;
+	top: 12px;
+	right: 0px;
+	width: 100%;
+	text-align: center;
+	pointer-events: none;
+}
+
+body:not(.result) #appTitle {
+	display: block !important;
+}
+
+#optionsContainer {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+#optionsContainer .btn {
+	margin-left: 4px;
+	background: #d1d4d9;
+	color: #3f3f3f;
+	border-color: transparent;
+}
+
+#optionsContainer .btn:hover {
+	background: #f2f3f6;
+	color: #000;
+}
+
+#optionsContainer .btn:not(#aboutButton) {
+	visibility: hidden;
+	pointer-events: none;
+}
+
+body.result #optionsContainer .btn:not(#aboutButton) {
+	visibility: visible;
+	pointer-events: all;
+}
+
+.tableContainer .btn-group .btn {
+	background: transparent;
+	color: #3f3f3f;
+	border-color: #ced4da;
+}
+
+.tableContainer .btn-group .btn:hover {
+	background: #e5e9eb;
+	color: #000;
+}
+
+#optionsContainer #fullscreenButton .fa-times {
+	display: none;
+}
+
+body.inFullscreen #optionsContainer #fullscreenButton .fa-expand {
+    display: none;
+}
+
+body.inFullscreen #optionsContainer #fullscreenButton .fa-times {
+    display: inline-block;
+}
+
 .main {
 	width: 100%;
 	margin: 0 auto;
-	padding: 30px 30px 80px 30px;
+	padding: 10px;
 }
 
 #fileDropContainer {
-	height: calc(100vh - 210px);
+	height: calc(100vh - 90px);
 	line-height: 30px;
-	background-color: #EBF2FB;
-	border: 1px dashed #9BA2BE;
-	color: #333;
+	background-color: #565D6D;
+	border: 2px dashed #B0B0B0;
+	color: #c6c7ca;
 	padding: 15% 20px;
-	margin-bottom: 10px;
+	margin: 40px 10px 0px 10px;
 	clear: both;
 	border-radius: 3px;
 	text-align: center;
 	transition-property: height, padding;
 	transition-duration: 600ms;
+	font-size: 16px;
+	font-weight: 100;
 }
 
 #fileDropContainer .btn {
@@ -196,12 +277,16 @@ button:hover, button:active, button:focus {
 }
 
 body.result #fileDropContainer {
-	height: 50px;
-	padding: 10px 20px;
+	height: 0px;
+	padding: 0px;
+	margin: 0;
+	border: none;
+	overflow: hidden;
 }
 
 #fileDropContainer.dragOver {
-	border: 2px solid #9BA2BE;
+	border: 2px solid #FFFFFF;
+	background: #363D4D;
 }
 
 .sampleDataInfo {
@@ -209,8 +294,14 @@ body.result #fileDropContainer {
 }
 
 .fileContainer {
+	/*
 	padding-top: 20px;
 	padding-bottom: 20px;
+	*/
+}
+
+body.result .fileContainer {
+	/*display: none;*/
 }
 
 .fileContainer ul {
@@ -219,6 +310,7 @@ body.result #fileDropContainer {
 	margin: none;
 	max-height: 90px;
 	overflow: scroll;
+	display: none;
 }
 
 .fileContainer ul li {
@@ -226,7 +318,7 @@ body.result #fileDropContainer {
 	padding: 2px 6px;
 	margin: 0 4px 4px 0;
 	border: 1px solid transparent;
-	background: #f8f8f8;
+	background: #f2f3f6;
 }
 
 .fileContainer ul li:hover {
@@ -237,10 +329,6 @@ body.result #fileDropContainer {
 	border-color: #999999;
 	box-shadow: inset 0 0 6px #afafaf;
 	background: #efefef;
-}
-
-.fileContainer ul li i.fa-file-alt {
-	margin-right: 6px;
 }
 
 .fileContainer ul li i.fa-times {
@@ -255,8 +343,48 @@ body.result #fileDropContainer {
 
 .resultContainer {
 	clear: both;
-	padding-top: 6px;
 	display: none;
+}
+
+.tab-content {
+	padding: 1px 10px 10px 10px;
+	border-left: 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+	background: #ffffff;
+}
+
+.resultContainer .nav-link {
+	color: #3f3f3f;
+}
+
+.resultContainer .nav-link.active {
+	color: #000;
+}
+
+.resultContainer > .nav-tabs > li > .nav-link {
+	background: #d1d4d9;
+	margin-right: 1px;
+}
+
+.resultContainer > .nav-tabs > li > .nav-link.active,
+.resultContainer > .tab-content {
+	background: #f2f3f6;
+	border-color: #f2f3f6;
+}
+
+.resultContainer > .nav-tabs > li > .nav-link .fa {
+	margin-right: 10px;
+}
+
+.resultContainer > .tab-content {
+	height: calc(100vh - 60px);
+	overflow: auto;
+}
+
+.selectResultTable {
+	box-sizing: border-box;
+	border: 1px solid #dfdfdf;
 }
 
 .resultContainer textarea {
@@ -271,7 +399,8 @@ body.result #fileDropContainer {
 .resultContainer #visualResultContainer .evalBody {
 	overflow: scroll;
 	padding-bottom: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
+	box-shadow: 0 0 2px 1px inset #C8C8C8;
 }
 
 .resultContainer #visualResultContainer ul {
@@ -300,12 +429,23 @@ body.result #fileDropContainer {
 	height: 24px;
 	background: #FFBD79;
 	overflow: hidden;
+	opacity: .5;
+	cursor: default;
+}
+
+.resultContainer #visualResultContainer li.sequencesListItem:hover {
+	opacity: .8;
 }
 
 .resultContainer #visualResultContainer li.sequencesListItem.prioritized {
 	border: 3px solid #000;
 	padding-top: 0px;
 	line-height: 17px;
+	opacity: 1;
+}
+
+.resultContainer #visualResultContainer li.sequencesListItem.prioritized:hover {
+	opacity: 1;
 }
 
 .tableContainer {
@@ -323,9 +463,20 @@ body.result #fileDropContainer {
 
 .tableContainer table td {
 	position: relative;
+	cursor: default;
 }
 
-#transitionMatrixResultContainer .tableContainer table td:hover::before {
+#transitionMatrixColoredResultContainer .tableContainer {
+	position: relative;
+	z-index: 1;
+}
+
+#transitionMatrixColoredResultContainer .tableContainer table td:hover {
+	font-weight: bolder;
+}
+
+#transitionMatrixResultContainer .tableContainer table td:hover::before,
+#transitionMatrixColoredResultContainer .tableContainer table td:hover::before {
 	content: "";
 	position: absolute;
 	left: 0;
@@ -335,4 +486,85 @@ body.result #fileDropContainer {
 	z-index: -1;
 	/* keep it below table content */
 	background-color: rgba(0,0,0,.075);
+}
+
+#actionDataResultContainer {
+	margin: 0px;
+}
+
+#actionDataResultContainer .tableContainer {
+	background: #fff;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+}
+
+/******************************
+* Interactive Markov Chains
+******************************/
+
+.markovChainVisualization {
+  	position: relative;
+  	width: 100%;
+	background-color: #ffffff;
+	color: white;
+	pointer-events: none;
+	left: 0;
+	height: calc(100vh - 195px);
+	min-height: 600px;
+	box-sizing: border-box;
+	border: 1px solid #dfdfdf;
+}
+
+.markovChainVisualization .visualizationOptionsContainer {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #495057;
+	z-index: 2;
+	pointer-events: all;
+}
+
+.markovChainVisualization .nodes {
+  pointer-events: all;
+}
+.markovChainVisualization .node {
+  stroke: #3d4557;
+  stroke-width: 1px;
+  opacity: 1;
+}
+.markovChainVisualization .currentState {
+  fill: rgba(0, 0, 0, 0.4);
+  stroke: #424242;
+  pointer-events: none;
+  display: none;
+}
+.markovChainVisualization[data-simulationCheckbox="true"] .currentState {
+  display: block;
+}
+.markovChainVisualization .node text{
+  text-anchor: middle;
+  font-size: 14px;
+}
+.markovChainVisualization .links {
+  fill: none;
+}
+.markovChainVisualization .links text {
+  display: none;
+  font-size: 10px;
+  fill: #777777;
+}
+.markovChainVisualization[data-valuesCheckbox="true"] .links text {
+	display: block;
+}
+.markovChainVisualization .link {
+  opacity: 0.4;
+  -webkit-transition: .25s opacity;
+  transition: .25s opacity;
+}
+.markovChainVisualization .link.active {
+  opacity: 0.8;
+}
+.markovChainVisualization .link.inactive {
+  opacity: 0.1;
 }
