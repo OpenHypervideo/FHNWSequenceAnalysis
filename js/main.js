@@ -8,7 +8,12 @@ $(document).ready( function() {
         $('.sampleDataInfo').show();
     }
 
-    $('[data-toggle="tooltip"]').tooltip({
+	$(window).resize(function() {
+		setAppHeight();	
+	});
+	setAppHeight();
+	
+	$('[data-toggle="tooltip"]').tooltip({
     	trigger: 'hover'
     });
 

@@ -2,6 +2,7 @@
 <html lang="en">
   <head class="html5">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
     <meta http-equiv="Pragma" content="no-cache"/>
     <meta http-equiv="Expires" content="0"/>
@@ -16,7 +17,7 @@
     <div class="main">
       <div id="appTitle" class="d-none d-lg-block"><b>log</b>ible | Sequence Analysis</div>
       <div id="optionsContainer">
-        <button class="btn btn-sm" id="newAnalysisButton" data-toggle="tooltip" title="Clear all data and start new analysis"><span class="fa fa-redo" style="margin-right: 10px;"></span>New Analysis</button>
+        <button class="btn btn-sm" id="newAnalysisButton" data-toggle="tooltip" title="Clear all data and start new analysis"><span class="fa fa-redo" style="margin-right: 10px;"></span><span class="d-none d-sm-inline">New Analysis</span></button>
         <button class="btn btn-sm" id="aboutButton" data-toggle="modal" data-target="#aboutModal">About</button>
         <button class="btn btn-sm" id="fullscreenButton" data-toggle="tooltip" title="Fullscreen"><span class="fa fa-expand"></span><span class="fa fa-times"></span></button>
       </div>
@@ -257,29 +258,66 @@
             </button>
           </div>
           <div class="modal-body">
-            <h4>Lorem Ipsum Dolor Sit Amet</h4>
-            <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
-            <h4>Header Level 4</h4>
-            <ol>
-               <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-               <li>Aliquam tincidunt mauris eu risus.</li>
-            </ol>
-            <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
-            <h4>Header Level 4</h4>
+            <h4>Publications</h4>
+            <div class="bg-light p-3 mb-3">
+              <code>Ruf, A., Niederhauser, M., Jäger, J., Zahn C., & Opwis, K. (2021). Introducing a new approach for investigating learning behavior. In C. Hmelo-Silver, B. de Wever, & J. Oshima (Eds.), 14th International Conference on Computer-Supported Collaborative Learning – CSCL 2021 (pp. 251-252). International Society of the Learning Sciences, 2021.</code>
+            </div>
+            <div class="bg-light p-3 mb-3">
+              <code>Ruf., A., Jäger, J., Niederhauser, M., Zahn, C. & Opwis, K. (2021). Logible: Detecting, Analyzing, and Visualizing Behavior Sequences for Investigating Learning Behavior. In Wichmann, A. Hoppe, H. U. & Rummel, N. (Eds.). (2021). <i>General Proceedings of the 1st Annual Meeting of the International Society of the Learning Sciences 2021 (pp. 13-16). Bochum, Germany: International Society of the Learning Sciences.</i></code>
+            </div>
+            <div class="bg-light p-3 mb-3">
+              <code>Ruf, A., Leisner, D., Zahn C., & Opwis, K. (2021). Impact of learners’ video interactions on learning success and cognitive load. In C. Hmelo-Silver, B. de Wever, & J. Oshima (Eds.), 14th International Conference on Computer-Supported Collaborative Learning – CSCL 2021 (pp. 3-10). International Society of the Learning Sciences, 2021.</code>
+            </div>
+            <h4>Background</h4>
+            <p>Educational videos are established around the globe with a continuously increasing popularity. The potential of learners’ video interaction for understanding learning behavior has been recognized in previous research, however, by primarily focusing on frequencies of single interactions (e.g., clicks such as play or pause). Yet, we assume that investigating meaningful behavior sequences can lead to in-depth understanding of learning behavior. The goal of this contribution is to detect and visualize behavior sequences using a newly developed method and application (<b>log</b>ible, making log files legible) to get deeper insights into the learning behavior of learners interacting with a video-based environment. </p>
+
+            <p>In previous work we enhanced the <a href="https://frametrail.org" target="_blank">FrameTrail Video Annotation Software</a> so it can record user interactions inside both the video player and the annotation components. So during the learning process, <b>FrameTrail</b> automatically logged the following actions: 
+            </p>
             <ul>
-               <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-               <li>Aliquam tincidunt mauris eu risus.</li>
+              <li>VideoPlay</li>
+              <li>VideoPause</li>
+              <li>VideoJumpBackward</li>
+              <li>VideoJumpForward</li>
+              <li>AnnotationAdd</li>
+              <li>AnnotationChangeTime</li>
+              <li>AnnotationChangeText</li>
             </ul>
-            <pre><code>
-            #header h1 a {
-              display: block;
-              width: 300px;
-              height: 80px;
-            }
-            </code></pre>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
-          </div>
+            <p>To build our method and logible, we used data of a learning session from an experimental study (see references above). Upon completion of a learning session, a chronologically ordered list of actions ("action-strings") including timestamps and meta information was exported from FrameTrail in the form of 92 Excel Sheets (one sheet per session).</p>
+
+            <h4>About <b>log</b>ible</h4>
+            <p><b>log</b>ible is a web-based application that is able to process the previously recorded Excel Sheets as input data, in order to detect and visualize predefined sequences of actions in different settings and learning scenarios (Individual vs. Collaborative leaerning, Annotating vs. Hyperlinking, see references above).</p>
+
+            <p>The sequence detection is <b>based on a set of manually defined rules</b> which are used to identify a given behavior sequence within a string of actions. </p>
+            <figure class="figure w-100 p-4">
+              <img src="https://sequence-analysis.frametrail.org/img/about-img-00.png" class="figure-img w-100" alt="Rule definitions (example)">
+              <figcaption class="figure-caption">Rule definitions (example)</figcaption>
+            </figure>
+
+            <p>In the next step, we additionally implemented the factors <b>priority</b> (higher levels of interactivity were preferred) and <b>length of sequence</b> (longer sequences were preferred) in <b>log</b>ible. These factors were necessary to <b>select the most meaningful sequence</b> for further analyses. </p>
+
+            <figure class="figure w-100 p-4">
+              <img src="https://sequence-analysis.frametrail.org/img/about-img-01.png" class="figure-img w-100" alt="Overview of behavior patterns and behavior sequences with prioritization">
+              <figcaption class="figure-caption">Overview of behavior patterns and behavior sequences with prioritization</figcaption>
+            </figure>
+
+            <p>For this purpose, all automatically detected behavior sequences in <b>log</b>ible were divided into blocks of non-overlapping sequences. Within each block, we calculate an overall score for the average priority, the number of actions and the number of behaviour sequences. For sequences with similar priority and length scores, we introduced heterogeneity as a third factor, to prefer candidates with a higher number of different actions. Then, normalized scores for each of the factors were calculated and an overall rating for the given list of behavior sequences was assigned, which also took into account the respective weight of each factor, which was iteratively defined during the development process  (priority: 2.2, length: 1, heterogeneity: 0.4). Based on this rating, we choose the top-rated behavior sequence per block.  
+            </p>
+
+            <p>After several iterations and continuous improvement <b>log</b>ible is able to detect all 17 predefined behavior sequences and visualize them color-coded above the action-string (see bottom line) of each learner: </p>
+            <figure class="figure w-100 p-4">
+              <img src="https://sequence-analysis.frametrail.org/img/about-img-02.jpg" class="figure-img w-100" alt="Logible: sequence visualization (example)">
+              <figcaption class="figure-caption"><b>log</b>ible: sequence visualization (example)</figcaption>
+            </figure>
+            <p>According to the rule-based prioritization the most valuable behavior sequence is selected (marked with a bold black frame). This visualized representation provides a first impression of students' learning behavior. </p>
+            <p><b>log</b>ible not only detects, analyzes, and visualizes sequences but allows for <b>comparisons of behavioral data</b> between different experimental conditions without the use of other software. The amount of conducted actions can be compared between experimental conditions (individual vs. collaborative learners and using hyperlinks vs. annotations). Such comparisons can also be conducted with the amount of behavior sequences (including types of sequences) from the uploaded data sets. We also implemented a graph visualization (using so-called Markov-chains; a method to analyze the probability of one action or sequence following another) to provide insights about how behavior sequences are dependent on each other. 
+            </p>
+            <figure class="figure w-100 p-4">
+              <img src="https://sequence-analysis.frametrail.org/img/about-img-03.png" class="figure-img w-100" alt="Amount of sequence occurrence of example data sets (left) and Markov-chain visualization representing transition probabilities (right)">
+              <figcaption class="figure-caption">Amount of sequence occurrence of example data sets (left) and Markov-chain visualization representing transition probabilities (right)</figcaption>
+            </figure>
+            <p><b>log</b>ible is highly sensitive and customizable. Thus, it allows to analyze interaction data from all kinds of sequentially logged data (from web-based video environments, online learning platforms etc.).</p>
+            <p>Please get in touch via joscha.jaeger [at] filmicweb.org or alessia.ruf [at] fhnw.ch for more information or if you're interested to collaborate.</p>
+            <p>For information about using logible in experimental research get in touch with alessia.ruf [at] fhnw.ch</p>
         </div>
       </div>
     </div>

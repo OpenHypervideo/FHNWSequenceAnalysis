@@ -4,27 +4,27 @@ var sequenceDefinitions = [
   {
     sequenceNumber: 1,
     sequenceColor: '#f6c143',
-    sequenceLabel: 'Active annotation adding',
+    sequenceLabel: 'Search and add',
   },
   {
     sequenceNumber: 2,
     sequenceColor: '#6899d0',
-    sequenceLabel: 'Active annotation modification',
+    sequenceLabel: 'Search and modify',
   },
   {
     sequenceNumber: 3,
     sequenceColor: '#df8244',
-    sequenceLabel: 'Passive annotation adding',
+    sequenceLabel: 'Find and add',
   },
   {
     sequenceNumber: 4,
     sequenceColor: '#7eac55',
-    sequenceLabel: 'Passive annotation modification',
+    sequenceLabel: 'Find and modify',
   },
   {
     sequenceNumber: 5,
     sequenceColor: '#d0cece',
-    sequenceLabel: 'Rewatch',
+    sequenceLabel: 'Search and navigate',
   },
   {
     sequenceNumber: 1.1,

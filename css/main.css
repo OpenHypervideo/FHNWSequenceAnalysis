@@ -1,3 +1,7 @@
+:root {
+   --app-height: 100vw;
+}
+
 @font-face {
 	font-family: TitilliumWeb;
 	font-weight: 400;
@@ -256,7 +260,7 @@ body.inFullscreen #optionsContainer #fullscreenButton .fa-times {
 }
 
 #fileDropContainer {
-	height: calc(100vh - 90px);
+	height: calc(var(--app-height) - 90px);
 	line-height: 30px;
 	background-color: #565D6D;
 	border: 2px dashed #B0B0B0;
@@ -378,7 +382,7 @@ body.result .fileContainer {
 }
 
 .resultContainer > .tab-content {
-	height: calc(100vh - 60px);
+	height: calc(var(--app-height) - 60px);
 	overflow: auto;
 }
 
@@ -510,7 +514,7 @@ body.result .fileContainer {
 	color: white;
 	pointer-events: none;
 	left: 0;
-	height: calc(100vh - 195px);
+	height: calc(var(--app-height) - 195px);
 	min-height: 600px;
 	box-sizing: border-box;
 	border: 1px solid #dfdfdf;

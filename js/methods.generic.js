@@ -449,6 +449,11 @@ function toggleFullscreen() {
 	}
 }
 
+function setAppHeight() {
+    var doc = document.documentElement
+    doc.style.setProperty('--app-height', $(window).height() +'px');
+}
+
 /*
   QueryableWorker instances methods:
     * sendQuery(queryable function name, argument to pass 1, argument to pass 2, etc. etc): calls a Worker's queryable function
